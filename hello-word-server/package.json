@@ -1,0 +1,17 @@
+{
+  "name": "hello-word-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "gun": "^0.2020.1236",
+    "nodemon": "^2.0.15"
+  }
+}
