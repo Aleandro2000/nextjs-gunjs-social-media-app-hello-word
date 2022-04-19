@@ -6,15 +6,15 @@ import { login } from "../../utils";
 export default function LoginComponent() {
     const handleSubmit =  e => {
         e.preventDefault();
-        const { username, password } = e.target.value;
-        login(username, password, true);
+        const { username, password } = e.target;
+        login(username.value, password.value, true);
     };
 
     return (
         <div className="shadow container mt-5 card text-center">
             <div className="card-body">
                 <Image src="/media/logo.png" width={200} height={100} />
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="input-group mb-3 mt-5">
                         <div className="input-group-prepend">
                             <span className="input-group-text" id="basic-addon1">Username</span>

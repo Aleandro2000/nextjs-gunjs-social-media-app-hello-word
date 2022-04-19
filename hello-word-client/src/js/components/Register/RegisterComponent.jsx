@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { register } from "../../utils";
 
 export default function RegisterComponent() {
+    const [loading, setLoading] = useState(false);
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+        const { username, password } = e.target;
+
+        setLoading(true);
+        await register(username.value, password.value);
+        setLoading(false);
+    };
+
     return (
         <div className="shadow container mt-5 card text-center">
             <div className="card-body">
                 <Image src="/media/logo.png" width={200} height={100} />
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="input-group mb-3 mt-5">
                         <div className="input-group-prepend">
                             <span className="input-group-text" id="basic-addon1">Username</span>
@@ -20,7 +32,11 @@ export default function RegisterComponent() {
                         </div>
                         <input type="password" name="password" className="form-control" aria-label="username" aria-describedby="basic-addon1" />
                     </div>
-                    <button type="submit" className="btn btn-primary mb-3"><i className="fa fa-plus" /> REGISTER</button>
+                    <button type="submit" className="btn btn-primary mb-3">
+                        {
+                            loading ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" /> : <i className="fa fa-plus" />
+                        } REGISTER
+                    </button>
                     <hr />
                     <div className="my-3">
                         <Link href="/login">

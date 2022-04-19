@@ -2,8 +2,12 @@ import Gun from "gun/gun";
 import "gun/sea";
 import "gun/axe";
 
-const gun = Gun();
-const user = gun.user().recall({sessionStorage: true});
+import { displayToast } from "./alerts";
+
+const gun = Gun({
+    peers: process.env.API_URL
+});
+const user = gun.user().recall({ sessionStorage: true });
 
 const register = (username, password, consoleLog) => {
     if (username && email && password) {
@@ -17,16 +21,19 @@ const register = (username, password, consoleLog) => {
         return false;
 };
 
-const login = (username, password, consoleLog) =>{
+const login = (username, password, consoleLog) => {
     if (username && password) {
         user.auth(username, password, ack => {
             consoleLog ? console.log(ack) : null;
             return gun.get(`pub/${ack.pub}`).get();
         });
+        displayToast("Logged in successfully!", true);
         return true;
     }
-    else
+    else {
+        displayToast("Failed to log in!");
         return false;
+    }
 };
 
 const logout = () => {
@@ -44,7 +51,7 @@ const removeAccount = (username, consoleLog) => {
         return false;
 };
 
-export default {
+module.exports = {
     register,
     login,
     logout,

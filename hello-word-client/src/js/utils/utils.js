@@ -13,6 +13,6 @@ const SessionSotrage = {
     }
 };
 
-export default {
+module.exports = {
     SessionSotrage
 };

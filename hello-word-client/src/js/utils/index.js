@@ -1,7 +1,9 @@
 import auth from "./auth";
 import utils from "./utils";
+import alerts from "./alerts";
 
-export default {
+module.exports = {
     ...auth,
-    ...utils
+    ...utils,
+    ...alerts
 };
