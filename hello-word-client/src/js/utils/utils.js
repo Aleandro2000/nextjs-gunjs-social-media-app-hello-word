@@ -1,4 +1,4 @@
-const SessionSotrage = {
+const SessionStorage = {
     getItem: item => {
         if (typeof window !== "undefined")
             return sessionStorage.getItem(item);
@@ -14,5 +14,5 @@ const SessionSotrage = {
 };
 
 module.exports = {
-    SessionSotrage
+    SessionStorage
 };

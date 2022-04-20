@@ -1,24 +1,21 @@
 import React from "react";
-import LoginComponent from "../components/Login/LoginComponent";
+import { useRouter } from "next/router";
+import { SessionStorage } from "../utils";
 
 const withAuth = Component => {
     const Auth = (props) => {
-        const { isLoggedIn } = props;
+        const router = useRouter();
   
-        if (!isLoggedIn) {
-            return (
-                <LoginComponent />
-            );
-        }
+        if (!SessionStorage.getItem("username") && typeof window !== "undefined")
+            router.push("/login");
   
         return (
             <Component {...props} />
         );
     };
   
-    if (Component.getInitialProps) {
+    if (Component.getInitialProps)
         Auth.getInitialProps = Component.getInitialProps;
-    }
   
     return Auth;
 };
