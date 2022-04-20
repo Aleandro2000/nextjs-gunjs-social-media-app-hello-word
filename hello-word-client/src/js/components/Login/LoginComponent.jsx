@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { login } from "../../utils";
 
 export default function LoginComponent() {
-    const handleSubmit =  e => {
+    const [loading, setLoading] = useState(false);
+
+    const handleSubmit =  async e => {
         e.preventDefault();
         const { username, password } = e.target;
-        login(username.value, password.value, true);
+
+        setLoading(true);
+        await login(username.value, password.value, true);
+        setLoading(false);
     };
 
     return (
@@ -27,7 +32,11 @@ export default function LoginComponent() {
                         </div>
                         <input type="password" name="password" className="form-control" aria-label="username" aria-describedby="basic-addon1" />
                     </div>
-                    <button type="submit" className="btn btn-primary mb-3"><i className="fa fa-sign-in" /> LOGIN</button>
+                    <button type="submit" className="btn btn-primary mb-3">
+                        {
+                            loading ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" /> : <i className="fa fa-sign-in" />
+                        } LOGIN    
+                    </button>
                     <hr />
                     <div className="my-3">
                         <Link href="/register">

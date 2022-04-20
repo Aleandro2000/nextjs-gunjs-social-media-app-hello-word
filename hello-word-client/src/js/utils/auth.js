@@ -10,9 +10,10 @@ const gun = Gun({
 const user = gun.user().recall({ sessionStorage: true });
 
 const register = (username, password, consoleLog) => {
-    if (username && email && password) {
+    if (username && password) {
         user.create(username, password, ack => {
             consoleLog ? console.log(ack) : null;
+            ack.err ? displayToast(ack.err) : displayToast("Successfull registration!", true);;
             return ack;
         });
         return true;
@@ -22,18 +23,14 @@ const register = (username, password, consoleLog) => {
 };
 
 const login = (username, password, consoleLog) => {
-    if (username && password) {
+    if (username && password)
         user.auth(username, password, ack => {
             consoleLog ? console.log(ack) : null;
+            ack.err ? displayToast(ack.err) : displayToast("Logged in successfully!", true);;
             return gun.get(`pub/${ack.pub}`).get();
         });
-        displayToast("Logged in successfully!", true);
-        return true;
-    }
-    else {
-        displayToast("Failed to log in!");
-        return false;
-    }
+    else
+        displayToast("Please complete all credentials!");
 };
 
 const logout = () => {
