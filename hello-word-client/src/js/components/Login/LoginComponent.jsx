@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { login } from "../../utils";
+import { useRouter } from "next/router";
 
 export default function LoginComponent() {
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const handleSubmit =  async e => {
         e.preventDefault();
@@ -13,6 +15,8 @@ export default function LoginComponent() {
         setLoading(true);
         await login(username.value, password.value, true);
         setLoading(false);
+
+        router.push("/dashboard");
     };
 
     return (
