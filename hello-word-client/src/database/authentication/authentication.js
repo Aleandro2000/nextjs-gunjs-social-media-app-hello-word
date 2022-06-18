@@ -1,25 +1,18 @@
 import Gun from "gun/gun";
 import "gun/sea";
 import "gun/axe";
-
 import { displayToast } from "./alerts";
-import { SessionStorage } from "./utils";
 
 const gun = Gun({
     peers: process.env.API_URL
 });
 const user = gun.user().recall({ sessionStorage: true });
 
-gun.on("auth", async event => {
-    const username = await user.get("alias");
-    SessionStorage.setItem("username", username);
-});
-
 const register = (username, password, consoleLog) => {
     if (username && password) {
         user.create(username, password, ack => {
             consoleLog ? console.log(ack) : null;
-            ack.err ? displayToast(ack.err) : displayToast("Successfull registration!", true);;
+            ack.err ? displayToast(ack.err, false) : displayToast("Successfull registration!");;
             return ack;
         });
     }
@@ -35,12 +28,12 @@ const login = (username, password, consoleLog) => {
                 displayToast(ack.err);
             else {
                 SessionStorage.setItem("username", username);
-                displayToast("Successfull logged in!", true);
+                displayToast("Successfull logged in!");
             }
             return gun.get(`pub/${ack.pub}`).get();
         });
     else
-        displayToast("Please complete all credentials!");
+        displayToast("Please complete all credentials!", false);
 };
 
 const logout = () => {
@@ -54,7 +47,7 @@ const removeAccount = (username, consoleLog) => {
             consoleLog ? console.log(ack) : null;
         });
     else
-        displayToast("Error to remove account!");
+        displayToast("Error to remove account!", false);
 };
 
 module.exports = {
