@@ -1,10 +1,11 @@
+@import url('http://fonts.cdnfonts.com/css/highscore-hero');
 @import '~bulma/bulma';
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: 'Highscore Hero', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   -webkit-animation: fadein 0.5s;
   /* Safari, Chrome and Opera > 12.1 */
@@ -14,8 +15,14 @@ body {
   /* Internet Explorer */
   -o-animation: fadein 0.5s;
   /* Opera < 12.1 */
+  background-image: url("../public/media/background.svg");
   animation: fadein 0.5s;
   scroll-behavior: smooth;
+}
+
+button {
+  font-family: 'Highscore Hero', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -80,4 +87,26 @@ a {
   to {
     opacity: 1;
   }
+}
+
+.shake:hover {
+  /* Start the shake animation and make the animation last for 0.5 seconds */
+  animation: shake 0.5s;
+
+  /* When the animation is finished, start again */
+  animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
 }

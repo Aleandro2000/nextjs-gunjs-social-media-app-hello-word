@@ -9,14 +9,14 @@ export default function NavbarTemplate() {
             const details = await getWalletDetails();
             displayToast("Connection to MetaMask successfully! :)");
         } catch (err) {
-            displayToast("Something were wrong! :(", false);
+            displayToast("Something were wrong or MetaMask is not added! :(", false);
         }
     };
 
     return (
-        <nav className="navbar" role="navigation" aria-label="main navigation">
+        <nav className="container navbar box has-background-white-ter p-0" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
-                <img className="navbar-item" src="/media/logo.png" width="112px" height="112px" />
+                <img alt="Hello Word logo" className="navbar-item" src="/media/logo.png" width="112px" height="112px" />
 
                 <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar">
                     <span aria-hidden="true"></span>
