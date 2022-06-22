@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignIn, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { getWalletDetails, displayToast } from "../../utils";
 import { ContentContext, LanguageContext } from "../../contexts/LanguageContext";
-import language_list from "../../l10n/language_list";
+import { language_list, appContent } from "../../l10n";
 
 export default function NavbarTemplate() {
     const [language, setLanguage] = useContext(LanguageContext);
@@ -17,6 +17,11 @@ export default function NavbarTemplate() {
             displayToast(content["metamask_message_fail"], false);
         }
     };
+
+    const changeLanguage = language => e => {
+        setLanguage(language ?? "en");
+        setContent(appContent[language] ?? appContent["en"]);
+    }; 
 
     return (
         <nav className="container navbar box has-background-white-ter p-0" role="navigation" aria-label="main navigation">
@@ -48,17 +53,17 @@ export default function NavbarTemplate() {
                         <a className="navbar-link">
                             {language}
                         </a>
-                        <div className="navbar-dropdown">
+                        <center className="navbar-dropdown">
                             {
                                 language_list.map((item, key) => {
                                     return (
-                                        <a className="navbar-item" key={key}>
+                                        <button className="navbar-item is-clickable" key={key} onClick={changeLanguage(item)}>
                                             {item}
-                                        </a>
+                                        </button>
                                     );
                                 })
                             }
-                        </div>
+                        </center>
                     </div>
                 </div>
                 <div className="navbar-end">

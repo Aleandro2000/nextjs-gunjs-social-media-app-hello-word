@@ -5,7 +5,9 @@ import de from "./intl_de.json";
 
 module.exports = {
     language_list,
-    en,
-    fr,
-    de,
+    appContent: {
+        en,
+        fr,
+        de,
+    },
 };
