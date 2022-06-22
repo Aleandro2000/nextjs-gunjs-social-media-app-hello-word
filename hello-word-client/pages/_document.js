@@ -5,7 +5,7 @@ export default function Document() {
     return (
         <Html lang="en">
             <title>
-                Hello Word
+                Hello World
             </title>
             <Head />
             <body>

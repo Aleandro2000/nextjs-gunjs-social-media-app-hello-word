@@ -1,8 +1,27 @@
 import { ethers } from "ethers";
 
-const getWalletDetails = async (defaultAccount) => {
+const SessionStorage = {
+    getItem: item => {
+        if (typeof window !== "undefined")
+            return sessionStorage.getItem(item);
+        return null;
+    },
+    setItem: (item, value) => {
+        if (typeof window !== "undefined")
+            sessionStorage.setItem(item, value);
+    },
+    removeItem: item => {
+        if (typeof window !== "undefined") {
+            sessionStorage.removeItem(item);
+            return true;
+        }
+        return false;
+    }
+};
+
+const getWalletDetails = async () => {
     try {
-        if(window.ethereum && window.ethereum.isMetaMask) {
+        if (window.ethereum && window.ethereum.isMetaMask) {
             const result = await window.ethereum.request({
                 method: "eth_requestAccounts",
             });
@@ -12,11 +31,12 @@ const getWalletDetails = async (defaultAccount) => {
             };
         }
         return null;
-    } catch(err) {
+    } catch (err) {
         return null;
     }
 };
 
 module.exports = {
     getWalletDetails,
+    SessionStorage,
 };

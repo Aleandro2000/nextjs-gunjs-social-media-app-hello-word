@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignIn, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { getWalletDetails, displayToast } from "../../utils";
+import { ContentContext, LanguageContext } from "../../contexts/LanguageContext";
+import language_list from "../../l10n/language_list";
 
 export default function NavbarTemplate() {
+    const [language, setLanguage] = useContext(LanguageContext);
+    const [content, setContent] = useContext(ContentContext);
+
     const signIn = async e => {
         try {
             const details = await getWalletDetails();
-            displayToast("Connection to MetaMask successfully! :)");
+            details ? displayToast(content["metamask_message_success"]) : displayToast(content["metamask_message_fail"], false);
         } catch (err) {
-            displayToast("Something were wrong or MetaMask is not added! :(", false);
+            displayToast(content["metamask_message_fail"], false);
         }
     };
 
@@ -28,28 +33,45 @@ export default function NavbarTemplate() {
             <div id="navbar" className="navbar-menu">
                 <div className="navbar-start">
                     <a className="navbar-item">
-                        Home
+                        {content["navbar_home"]}
                     </a>
 
                     <a className="navbar-item">
-                        FAQ
+                        {content["navbar_faq"]}
                     </a>
 
                     <a className="navbar-item">
-                        Terms&amp;Conditions
+                        {content["navbar_terms"]}
                     </a>
+                    
+                    <div className="navbar-item has-dropdown is-hoverable">
+                        <a className="navbar-link">
+                            {language}
+                        </a>
+                        <div className="navbar-dropdown">
+                            {
+                                language_list.map((item, key) => {
+                                    return (
+                                        <a className="navbar-item" key={key}>
+                                            {item}
+                                        </a>
+                                    );
+                                })
+                            }
+                        </div>
+                    </div>
                 </div>
                 <div className="navbar-end">
                     <div className="navbar-item">
                         <div className="buttons">
                             <a className="button is-success">
                                 <strong>
-                                    <FontAwesomeIcon icon={faPlus} /> SIGN UP
+                                    <FontAwesomeIcon icon={faPlus} /> {content["navbar_signup"]}
                                 </strong>
                             </a>
                             <button className="button is-success" onClick={signIn}>
                                 <strong>
-                                    <FontAwesomeIcon icon={faSignIn} /> LOGIN
+                                    <FontAwesomeIcon icon={faSignIn} /> {content["navbar_login"]}
                                 </strong>
                             </button>
                         </div>
