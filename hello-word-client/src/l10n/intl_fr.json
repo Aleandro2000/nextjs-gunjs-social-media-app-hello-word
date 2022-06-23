@@ -1,13 +1,15 @@
 {
     "navbar_home": "La maison",
     "navbar_faq": "FAQ",
-    "navbar_terms": "Termes et conditions",
+    "navbar_terms": "Termes",
     "navbar_login": "Connexion",
     "navbar_signup": "S'inscrire",
     "header_title": "Hello world!",
     "header_content": "Et bienvenue sur la seule plateforme de médias sociaux véritablement décentralisée ! À partir de maintenant, vous pouvez posséder vos données sans aucune grande entreprise technologique. ;)",
-    "hello_word_button_text": "Suite",
+    "header_button_text": "Suite",
 
     "metamask_message_success": "Connexion à MetaMask réussie ! :)",
-    "metamask_message_fail" : "Quelque chose n'allait pas ou MetaMask n'est pas ajouté ! :("
+    "metamask_message_fail" : "Quelque chose n'allait pas ou MetaMask n'est pas ajouté ! :(",
+    
+    "accessibility_cat_space": "Chat dans l'espace"
 }

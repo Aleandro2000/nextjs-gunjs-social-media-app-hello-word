@@ -57,7 +57,7 @@ export default function NavbarTemplate() {
                             {
                                 language_list.map((item, key) => {
                                     return (
-                                        <button className="navbar-item is-clickable" key={key} onClick={changeLanguage(item)}>
+                                        <button className="button navbar-item is-clickable" key={key} onClick={changeLanguage(item)}>
                                             {item}
                                         </button>
                                     );

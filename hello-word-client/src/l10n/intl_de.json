@@ -1,13 +1,15 @@
 {
     "navbar_home": "Heimat",
     "navbar_faq": "FAQ",
-    "navbar_terms": "Allgemeine Geschäftsbedingungen",
+    "navbar_terms": "Bedingungen",
     "navbar_login": "Anmeldung",
     "navbar_signup": "Anmelden",
     "header_title": "Hello world!",
     "header_content": "Und willkommen auf der einzigen wirklich dezentralen Social-Media-Plattform! Ab sofort können Sie Ihre Daten ohne große Technologieunternehmen besitzen. ;)",
-    "hello_word_button_text": "Nach",
+    "header_button_text": "Nach",
 
     "metamask_message_success": "Verbindung zu MetaMask erfolgreich! :)",
-    "metamask_message_fail" : "Etwas war falsch oder MetaMask wurde nicht hinzugefügt! :("
+    "metamask_message_fail" : "Etwas war falsch oder MetaMask wurde nicht hinzugefügt! :(",
+    
+    "accessibility_cat_space": "Katze im Weltraum"
 }
