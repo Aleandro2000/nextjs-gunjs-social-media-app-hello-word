@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignIn, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { getWalletDetails, displayToast } from "../../utils";
@@ -8,6 +8,9 @@ import { language_list, appContent } from "../../l10n";
 export default function NavbarTemplate() {
     const [language, setLanguage] = useContext(LanguageContext);
     const [content, setContent] = useContext(ContentContext);
+    const [active, setActive] = useState(false);
+
+    const handleOpenMenu = e => setActive(!active);
 
     const signIn = async e => {
         try {
@@ -28,14 +31,14 @@ export default function NavbarTemplate() {
             <div className="navbar-brand">
                 <img alt="Hello Word logo" className="navbar-item" src="/media/logo.png" width="112px" height="112px" />
 
-                <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar">
+                <a role="button" onClick={handleOpenMenu} className={`navbar-burger ${active ? "burger is-active" : ""}`} aria-label="menu" aria-expanded="false" data-target="navbar">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                 </a>
             </div>
 
-            <div id="navbar" className="navbar-menu">
+            <div id="navbar" className={`navbar-menu ${active ? "is-active" : ""}`}>
                 <div className="navbar-start">
                     <a className="navbar-item">
                         {content["navbar_home"]}
