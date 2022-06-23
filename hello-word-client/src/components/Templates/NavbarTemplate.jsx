@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import CryptoJS from "crypto-js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignIn, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { getWalletDetails, displayToast, SessionStorage } from "../../utils";
@@ -15,7 +16,10 @@ export default function NavbarTemplate() {
     const signIn = async e => {
         try {
             const details = await getWalletDetails();
-            details ? displayToast(content["metamask_message_success"]) : displayToast(content["metamask_message_fail"], false);
+            if (details.result[0]) {
+                SessionStorage.setItem("adr", CryptoJS.AES.encrypt(details.result[0], process.env.SECRET_KEY));
+                displayToast(content["metamask_message_success"]);
+            } else displayToast(content["metamask_message_fail"], false);
         } catch (err) {
             displayToast(content["metamask_message_fail"], false);
         }
@@ -25,7 +29,7 @@ export default function NavbarTemplate() {
         SessionStorage.setItem("lang", language);
         setLanguage(language ?? "en");
         setContent(appContent[language] ?? appContent["en"]);
-    }; 
+    };
 
     return (
         <nav className="container navbar box has-background-white-ter p-0" role="navigation" aria-label="main navigation">
@@ -52,7 +56,7 @@ export default function NavbarTemplate() {
                     <a className="navbar-item">
                         {content["navbar_terms"]}
                     </a>
-                    
+
                     <div className="navbar-item has-dropdown is-hoverable">
                         <a className="navbar-link">
                             {language}
