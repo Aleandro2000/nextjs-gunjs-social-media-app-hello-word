@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignIn, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { getWalletDetails, displayToast } from "../../utils";
+import { getWalletDetails, displayToast, SessionStorage } from "../../utils";
 import { ContentContext, LanguageContext } from "../../contexts/LanguageContext";
 import { language_list, appContent } from "../../l10n";
 
@@ -22,6 +22,7 @@ export default function NavbarTemplate() {
     };
 
     const changeLanguage = language => e => {
+        SessionStorage.setItem("lang", language);
         setLanguage(language ?? "en");
         setContent(appContent[language] ?? appContent["en"]);
     }; 
@@ -60,7 +61,7 @@ export default function NavbarTemplate() {
                             {
                                 language_list.map((item, key) => {
                                     return (
-                                        <button className="button navbar-item is-clickable" key={key} onClick={changeLanguage(item)}>
+                                        <button className="button navbar-item is-clickable is-fullwidth" key={key} onClick={changeLanguage(item)}>
                                             {item}
                                         </button>
                                     );
