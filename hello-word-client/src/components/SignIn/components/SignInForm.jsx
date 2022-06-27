@@ -18,7 +18,7 @@ export default function SignInForm() {
                 <div className="container">
                     <div className="columns is-centered">
                         <div className="column is-5-tablet is-4-desktop is-3-widescreen">
-                            <div className="box">
+                            <div className="box has-background-white-ter">
                                 <button className="button is-success" onClick={handleBack}>
                                     <FontAwesomeIcon icon={faArrowLeft} className="pr-2" /> Back
                                 </button>
