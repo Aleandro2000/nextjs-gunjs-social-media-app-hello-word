@@ -17,7 +17,7 @@ export default function NavbarTemplate() {
         try {
             const details = await getWalletDetails();
             if (details.result[0]) {
-                SessionStorage.setItem("adr", CryptoJS.AES.encrypt(details.result[0], process.env.SECRET_KEY));
+                SessionStorage.setItem("adr", CryptoJS.AES.encrypt(details.result[0], process.env.NEXT_PUBLIC_SECRET_KEY));
                 displayToast(content["metamask_message_success"]);
             } else displayToast(content["metamask_message_fail"], false);
         } catch (err) {

@@ -11,7 +11,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 
-if (process.env.NODE_ENV !== "production" && typeof window !== "undefined") {
+if (process.env.NEXT_PUBLIC_ENV !== "production" && typeof window !== "undefined") {
     const axe = require("react-axe");
     axe(React, ReactDOM, 1000);
 }
