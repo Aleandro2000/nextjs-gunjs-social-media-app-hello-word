@@ -18,37 +18,39 @@ export default function SignInForm() {
                 <div className="container">
                     <div className="columns is-centered">
                         <div className="column is-5-tablet is-4-desktop is-3-widescreen">
-                            <form onSubmit={handleSubmit} className="box">
+                            <div className="box">
                                 <button className="button is-success" onClick={handleBack}>
                                     <FontAwesomeIcon icon={faArrowLeft} className="pr-2" /> Back
                                 </button>
-                                <div className="has-text-centered">
-                                    <img alt="Hello Word logo" src="/media/logo.png" width="200px" height="200px" />
-                                </div>
-                                <div className="field">
-                                    <label htmlFor="Username" className="label">Username</label>
-                                    <div className="control has-icons-left">
-                                        <input type="text" placeholder="Username" className="input" required />
-                                        <span className="icon is-small is-left">
-                                            <FontAwesomeIcon icon={faUser} />
-                                        </span>
+                                <form onSubmit={handleSubmit}>
+                                    <div className="has-text-centered">
+                                        <img alt="Hello Word logo" src="/media/logo.png" width="200px" height="200px" />
                                     </div>
-                                </div>
-                                <div className="field">
-                                    <label htmlFor="Password" className="label">Password</label>
-                                    <div className="control has-icons-left">
-                                        <input type="password" placeholder="Password" className="input" required />
-                                        <span className="icon is-small is-left">
-                                            <FontAwesomeIcon icon={faLock} /> 
-                                        </span>
+                                    <div className="field">
+                                        <label htmlFor="Username" className="label">Username</label>
+                                        <div className="control has-icons-left">
+                                            <input type="text" placeholder="Username" className="input" required />
+                                            <span className="icon is-small is-left">
+                                                <FontAwesomeIcon icon={faUser} />
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="field has-text-centered mt-6">
-                                    <button type="submit" className="button is-success">
-                                        <FontAwesomeIcon icon={faSignIn} className="pr-2" /> Sign In
-                                    </button>
-                                </div>
-                            </form>
+                                    <div className="field">
+                                        <label htmlFor="Password" className="label">Password</label>
+                                        <div className="control has-icons-left">
+                                            <input type="password" placeholder="Password" className="input" required />
+                                            <span className="icon is-small is-left">
+                                                <FontAwesomeIcon icon={faLock} /> 
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="field has-text-centered mt-6">
+                                        <button type="submit" className="button is-success">
+                                            <FontAwesomeIcon icon={faSignIn} className="pr-2" /> Sign In
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
