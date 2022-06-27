@@ -5,11 +5,14 @@ import { faSignIn, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { getWalletDetails, displayToast, SessionStorage } from "../../utils";
 import { ContentContext, LanguageContext } from "../../contexts/LanguageContext";
 import { language_list, appContent } from "../../l10n";
+import { useRouter } from "next/router";
 
 export default function NavbarTemplate() {
     const [language, setLanguage] = useContext(LanguageContext);
     const [content, setContent] = useContext(ContentContext);
     const [active, setActive] = useState(false);
+
+    const route = useRouter();
 
     const handleOpenMenu = e => setActive(!active);
 
@@ -18,6 +21,7 @@ export default function NavbarTemplate() {
             const details = await getWalletDetails();
             if (details.result[0]) {
                 SessionStorage.setItem("adr", CryptoJS.AES.encrypt(details.result[0], process.env.NEXT_PUBLIC_SECRET_KEY));
+                route.push("/signin");
                 displayToast(content["metamask_message_success"]);
             } else displayToast(content["metamask_message_fail"], false);
         } catch (err) {
