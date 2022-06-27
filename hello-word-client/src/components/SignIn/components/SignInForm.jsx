@@ -20,7 +20,7 @@ export default function SignInForm() {
                         <div className="column is-5-tablet is-4-desktop is-3-widescreen">
                             <form onSubmit={handleSubmit} className="box">
                                 <button className="button is-success" onClick={handleBack}>
-                                    <FontAwesomeIcon icon={faArrowLeft} /> Back
+                                    <FontAwesomeIcon icon={faArrowLeft} className="pr-2" /> Back
                                 </button>
                                 <div className="has-text-centered">
                                     <img alt="Hello Word logo" src="/media/logo.png" width="200px" height="200px" />
@@ -45,7 +45,7 @@ export default function SignInForm() {
                                 </div>
                                 <div className="field has-text-centered mt-6">
                                     <button type="submit" className="button is-success">
-                                        <FontAwesomeIcon icon={faSignIn} /> Sign In
+                                        <FontAwesomeIcon icon={faSignIn} className="pr-2" /> Sign In
                                     </button>
                                 </div>
                             </form>
