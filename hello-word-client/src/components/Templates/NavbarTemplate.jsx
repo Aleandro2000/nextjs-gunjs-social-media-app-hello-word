@@ -14,9 +14,9 @@ export default function NavbarTemplate() {
 
     const route = useRouter();
 
-    const handleOpenMenu = e => setActive(!active);
+    const handleOpenMenu = () => setActive(!active);
 
-    const signIn = async e => {
+    const signIn = async () => {
         try {
             const details = await getWalletDetails();
             if (details.result[0]) {
@@ -29,7 +29,7 @@ export default function NavbarTemplate() {
         }
     };
 
-    const changeLanguage = language => e => {
+    const changeLanguage = language => () => {
         SessionStorage.setItem("lang", language);
         setLanguage(language ?? "en");
         setContent(appContent[language] ?? appContent["en"]);

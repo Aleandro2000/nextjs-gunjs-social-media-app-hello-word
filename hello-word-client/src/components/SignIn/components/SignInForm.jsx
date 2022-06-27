@@ -1,13 +1,27 @@
 import React from "react";
+import { useRouter } from "next/router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignIn, faArrowLeft, faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 
 export default function SignInForm() {
+    const route = useRouter();
+
+    const handleBack = () => route.back();
+
+    const handleSubmit = e => {
+        e.preventDefault();
+    };
+
     return (
         <div className="hero is-fullheight">
             <div className="hero-body">
                 <div className="container">
                     <div className="columns is-centered">
                         <div className="column is-5-tablet is-4-desktop is-3-widescreen">
-                            <form action="" className="box">
+                            <form onSubmit={handleSubmit} className="box">
+                                <button className="button is-success" onClick={handleBack}>
+                                    <FontAwesomeIcon icon={faArrowLeft} /> Back
+                                </button>
                                 <div className="has-text-centered">
                                     <img alt="Hello Word logo" src="/media/logo.png" width="200px" height="200px" />
                                 </div>
@@ -16,7 +30,7 @@ export default function SignInForm() {
                                     <div className="control has-icons-left">
                                         <input type="text" placeholder="Username" className="input" required />
                                         <span className="icon is-small is-left">
-                                            <i className="fa fa-envelope"></i>
+                                            <FontAwesomeIcon icon={faUser} />
                                         </span>
                                     </div>
                                 </div>
@@ -25,13 +39,13 @@ export default function SignInForm() {
                                     <div className="control has-icons-left">
                                         <input type="password" placeholder="Password" className="input" required />
                                         <span className="icon is-small is-left">
-                                            <i className="fa fa-lock"></i>
+                                            <FontAwesomeIcon icon={faLock} /> 
                                         </span>
                                     </div>
                                 </div>
                                 <div className="field has-text-centered mt-6">
-                                    <button className="button is-success">
-                                        Login
+                                    <button type="submit" className="button is-success">
+                                        <FontAwesomeIcon icon={faSignIn} /> Sign In
                                     </button>
                                 </div>
                             </form>
