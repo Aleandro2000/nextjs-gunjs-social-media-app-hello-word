@@ -8,6 +8,9 @@
     "header_content": "And welcome to the only truly decentralized social media platform! From now, you may own your data without any big tech company. ;)",
     "header_button_text": "More",
 
+    "usernameRequiredText": "Username is required",
+    "passwordRequiredText": "Password must contain at least 8 characters, one uppercase, one number and one special case character",
+
     "metamask_message_success": "Connection to MetaMask successfully! :)",
     "metamask_message_fail" : "Something were wrong or MetaMask is not added! :(",
 

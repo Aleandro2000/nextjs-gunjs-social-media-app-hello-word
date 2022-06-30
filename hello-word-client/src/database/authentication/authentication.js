@@ -1,7 +1,7 @@
 import Gun from "gun/gun";
 import "gun/sea";
 import "gun/axe";
-import { displayToast } from "./alerts";
+import { displayToast } from "../../utils";
 
 const gun = Gun({
     peers: process.env.API_URL
@@ -26,10 +26,8 @@ const login = (username, password, consoleLog) => {
             consoleLog ? console.log(ack) : null;
             if (ack.err)
                 displayToast(ack.err);
-            else {
-                SessionStorage.setItem("username", username);
+            else
                 displayToast("Successfull logged in!");
-            }
             return gun.get(`pub/${ack.pub}`).get();
         });
     else
