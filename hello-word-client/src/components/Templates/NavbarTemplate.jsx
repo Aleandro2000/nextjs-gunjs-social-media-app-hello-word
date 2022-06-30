@@ -16,12 +16,12 @@ export default function NavbarTemplate() {
 
     const handleOpenMenu = () => setActive(!active);
 
-    const signIn = async () => {
+    const redirect = path => async () => {
         try {
             const details = await getWalletDetails();
             if (details.result[0]) {
                 SessionStorage.setItem("adr", CryptoJS.AES.encrypt(details.result[0], process.env.NEXT_PUBLIC_SECRET_KEY));
-                route.push("/signin");
+                route.push(path);
                 displayToast(content["metamask_message_success"]);
             } else displayToast(content["metamask_message_fail"], false);
         } catch (err) {
@@ -81,12 +81,12 @@ export default function NavbarTemplate() {
                 <div className="navbar-end">
                     <div className="navbar-item">
                         <div className="buttons">
-                            <a className="button is-success">
+                            <button className="button is-success" onClick={redirect("/signup")}>
                                 <strong>
                                     <FontAwesomeIcon icon={faPlus} /> {content["navbar_signup"]}
                                 </strong>
-                            </a>
-                            <button className="button is-success" onClick={signIn}>
+                            </button>
+                            <button className="button is-success" onClick={redirect("/signin")}>
                                 <strong>
                                     <FontAwesomeIcon icon={faSignIn} /> {content["navbar_login"]}
                                 </strong>
