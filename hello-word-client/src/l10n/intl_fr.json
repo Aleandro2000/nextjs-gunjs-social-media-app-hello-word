@@ -16,7 +16,7 @@
     "auth_back_text": "Retour",
     "auth_username_text": "Nom d'utilisateur",
     "auth_password_text": "Le mot de passe",
-    "auth_confirm_apssword_text": "Confirmez le mot de passe",
+    "auth_confirm_password_text": "Confirmez le mot de passe",
 
     "metamask_message_success": "Connexion à MetaMask réussie ! :)",
     "metamask_message_fail" : "Quelque chose n'allait pas ou MetaMask n'est pas ajouté ! :(",
