@@ -24,7 +24,7 @@ export default function SignUpForm() {
         validationSchema: yup.object({
             username: yup.string().required(content["usernameRequiredText"]),
             password: yup.string().trim().matches(passwordRegex).required(content["passwordRequiredText"]),
-            confirmPassword: yup.string().trim().required("Please confirm your password").oneOf([yup.ref("password"), null], "Passwords don't match."),
+            confirmPassword: yup.string().trim().required(content["ConfirmPasswordRequiredText"]).oneOf([yup.ref("password"), null], content["wrongConfirmPasswordText"]),
         }),
     });
 
@@ -38,14 +38,14 @@ export default function SignUpForm() {
                         <div className="column is-5-tablet is-4-desktop is-3-widescreen">
                             <div className="box has-background-white-ter">
                                 <button className="button is-success" onClick={handleBack}>
-                                    <FontAwesomeIcon icon={faArrowLeft} className="pr-2" /> Back
+                                    <FontAwesomeIcon icon={faArrowLeft} className="pr-2" /> {content["auth_back_text"]}
                                 </button>
                                 <form onSubmit={formik.handleSubmit}>
                                     <div className="has-text-centered">
                                         <img alt="Hello Word logo" src="/media/logo.png" width="200px" height="200px" />
                                     </div>
                                     <div className="field">
-                                        <label htmlFor="Username" className="label">Username</label>
+                                        <label htmlFor={content["auth_username_text"]} className="label">{content["auth_username_text"]}</label>
                                         <div className="control has-icons-left">
                                             <input
                                                 type="text"
@@ -53,7 +53,7 @@ export default function SignUpForm() {
                                                 value={formik.values.username}
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
-                                                placeholder="Username"
+                                                placeholder={content["auth_username_text"]}
                                                 className="input" />
                                             <span className="icon is-small is-left">
                                                 <FontAwesomeIcon icon={faUser} />
@@ -64,7 +64,7 @@ export default function SignUpForm() {
                                         )}
                                     </div>
                                     <div className="field">
-                                        <label htmlFor="Password" className="label">Password</label>
+                                        <label htmlFor={content["auth_password_text"]} className="label">{content["auth_password_text"]}</label>
                                         <div className="control has-icons-left">
                                             <input
                                                 type="password"
@@ -72,7 +72,7 @@ export default function SignUpForm() {
                                                 value={formik.values.password}
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
-                                                placeholder="Password"
+                                                placeholder={content["auth_password_text"]}
                                                 className="input" />
                                             <span className="icon is-small is-left">
                                                 <FontAwesomeIcon icon={faLock} /> 
@@ -83,7 +83,7 @@ export default function SignUpForm() {
                                         )}
                                     </div>
                                     <div className="field">
-                                        <label htmlFor="Confirm Password" className="label">Confirm Password</label>
+                                        <label htmlFor={content["auth_confirm_password_text"]} className="label">{content["auth_confirm_password_text"]}</label>
                                         <div className="control has-icons-left">
                                             <input
                                                 type="password"
@@ -91,7 +91,7 @@ export default function SignUpForm() {
                                                 value={formik.values.confirmPassword}
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
-                                                placeholder="Confirm Password"
+                                                placeholder={content["auth_confirm_password_text"]}
                                                 className="input" />
                                             <span className="icon is-small is-left">
                                                 <FontAwesomeIcon icon={faLock} /> 
@@ -103,7 +103,7 @@ export default function SignUpForm() {
                                     </div>
                                     <div className="field has-text-centered mt-6">
                                         <button type="submit" className="button is-success">
-                                            <FontAwesomeIcon icon={faSignIn} className="pr-2" /> Sign Up
+                                            <FontAwesomeIcon icon={faSignIn} className="pr-2" /> {content["signup"]}
                                         </button>
                                     </div>
                                 </form>

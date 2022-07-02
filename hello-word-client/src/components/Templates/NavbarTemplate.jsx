@@ -83,12 +83,12 @@ export default function NavbarTemplate() {
                         <div className="buttons">
                             <button className="button is-success" onClick={redirect("/signup")}>
                                 <strong>
-                                    <FontAwesomeIcon icon={faPlus} /> {content["navbar_signup"]}
+                                    <FontAwesomeIcon icon={faPlus} /> {content["signup"]}
                                 </strong>
                             </button>
                             <button className="button is-success" onClick={redirect("/signin")}>
                                 <strong>
-                                    <FontAwesomeIcon icon={faSignIn} /> {content["navbar_login"]}
+                                    <FontAwesomeIcon icon={faSignIn} /> {content["login"]}
                                 </strong>
                             </button>
                         </div>

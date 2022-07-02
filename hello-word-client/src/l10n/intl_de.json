@@ -2,8 +2,10 @@
     "navbar_home": "Heimat",
     "navbar_faq": "FAQ",
     "navbar_terms": "Bedingungen",
-    "navbar_login": "Anmeldung",
-    "navbar_signup": "Anmelden",
+    
+    "login": "Anmeldung",
+    "signup": "Anmelden",
+    
     "header_title": "Hello world!",
     "header_content": "Und willkommen auf der einzigen wirklich dezentralen Social-Media-Plattform! Ab sofort können Sie Ihre Daten ohne große Technologieunternehmen besitzen. ;)",
     "header_button_text": "Nach",
@@ -14,6 +16,7 @@
     "auth_back_text": "Der Rücken",
     "auth_username_text": "Nutzername",
     "auth_password_text": "Passwort",
+    "auth_confirm_password_text": "Passwort bestätigen",
 
     "metamask_message_success": "Verbindung zu MetaMask erfolgreich! :)",
     "metamask_message_fail" : "Etwas war falsch oder MetaMask wurde nicht hinzugefügt! :(",

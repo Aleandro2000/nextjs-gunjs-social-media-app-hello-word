@@ -2,14 +2,18 @@
     "navbar_home": "Home",
     "navbar_faq": "FAQ",
     "navbar_terms": "Terms&Conditions",
-    "navbar_login": "Sign In",
-    "navbar_signup": "Sign Up",
+    
+    "login": "Sign In",
+    "signup": "Sign Up",
+    
     "header_title": "Hello world!",
     "header_content": "And welcome to the only truly decentralized social media platform! From now, you may own your data without any big tech company. ;)",
     "header_button_text": "More",
 
     "usernameRequiredText": "Username is required",
     "passwordRequiredText": "Password must contain at least 8 characters, one uppercase, one number and one special case character",
+    "confirmPasswordRequiredText": "Please confirm your password",
+    "WrongConfirmPasswrdText": "Passwords don't match",
 
     "auth_back_text": "Back",
     "auth_username_text": "Username",
