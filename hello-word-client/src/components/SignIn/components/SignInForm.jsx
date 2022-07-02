@@ -17,8 +17,8 @@ export default function SignInForm() {
             username: "",
             password: "",
         },
-        onSubmit: () => {
-            login(username, password);
+        onSubmit: values => {
+            login(values.username, values.password);
         },
         validationSchema: yup.object({
             username: yup.string().required(content["usernameRequiredText"]),

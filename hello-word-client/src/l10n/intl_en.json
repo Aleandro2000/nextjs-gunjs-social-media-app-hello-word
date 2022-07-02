@@ -11,6 +11,11 @@
     "usernameRequiredText": "Username is required",
     "passwordRequiredText": "Password must contain at least 8 characters, one uppercase, one number and one special case character",
 
+    "auth_back_text": "Back",
+    "auth_username_text": "Username",
+    "auth_password_text": "Password",
+    "auth_confirm_password_text": "Confirm Password",
+
     "metamask_message_success": "Connection to MetaMask successfully! :)",
     "metamask_message_fail" : "Something were wrong or MetaMask is not added! :(",
 

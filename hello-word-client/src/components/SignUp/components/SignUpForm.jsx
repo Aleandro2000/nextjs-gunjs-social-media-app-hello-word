@@ -18,8 +18,8 @@ export default function SignUpForm() {
             password: "",
             confirmPassword: "",
         },
-        onSubmit: () => {
-            register(username, password);
+        onSubmit: values => {
+            register(values.username, values.password);
         },
         validationSchema: yup.object({
             username: yup.string().required(content["usernameRequiredText"]),
@@ -103,7 +103,7 @@ export default function SignUpForm() {
                                     </div>
                                     <div className="field has-text-centered mt-6">
                                         <button type="submit" className="button is-success">
-                                            <FontAwesomeIcon icon={faSignIn} className="pr-2" /> Sign In
+                                            <FontAwesomeIcon icon={faSignIn} className="pr-2" /> Sign Up
                                         </button>
                                     </div>
                                 </form>

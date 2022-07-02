@@ -8,6 +8,13 @@
     "header_content": "Und willkommen auf der einzigen wirklich dezentralen Social-Media-Plattform! Ab sofort können Sie Ihre Daten ohne große Technologieunternehmen besitzen. ;)",
     "header_button_text": "Nach",
 
+    "usernameRequiredText": "Benutzername wird benötigt",
+    "passwordRequiredText": "Das Passwort muss mindestens 8 Zeichen, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten",
+
+    "auth_back_text": "Der Rücken",
+    "auth_username_text": "Nutzername",
+    "auth_password_text": "Passwort",
+
     "metamask_message_success": "Verbindung zu MetaMask erfolgreich! :)",
     "metamask_message_fail" : "Etwas war falsch oder MetaMask wurde nicht hinzugefügt! :(",
     

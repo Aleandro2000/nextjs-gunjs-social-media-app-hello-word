@@ -8,6 +8,13 @@
     "header_content": "Et bienvenue sur la seule plateforme de médias sociaux véritablement décentralisée ! À partir de maintenant, vous pouvez posséder vos données sans aucune grande entreprise technologique. ;)",
     "header_button_text": "Suite",
 
+    "usernameRequiredText": "Nom d'utilisateur est nécessaire",
+    "passwordRequiredText": "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial",
+
+    "auth_back_text": "Retour",
+    "auth_username_text": "Nom d'utilisateur",
+    "auth_password_text": "Le mot de passe",
+
     "metamask_message_success": "Connexion à MetaMask réussie ! :)",
     "metamask_message_fail" : "Quelque chose n'allait pas ou MetaMask n'est pas ajouté ! :(",
     
