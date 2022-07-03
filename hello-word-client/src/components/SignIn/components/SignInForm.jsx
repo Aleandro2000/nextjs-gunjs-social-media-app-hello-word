@@ -5,7 +5,6 @@ import * as yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignIn, faArrowLeft, faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { login } from "../../../database/authentication";
-import { passwordRegex } from "../../../utils/regex";
 import { ContentContext } from "../../../contexts/LanguageContext";
 
 export default function SignInForm() {
