@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignIn, faArrowLeft, faUser, faLock } from "@fortawesome/free-solid-svg-icons";
-import { register } from "../../../database/authentication";
+import { register } from "../../../database";
 import { passwordRegex } from "../../../utils/regex";
 import { ContentContext } from "../../../contexts/LanguageContext";
 
