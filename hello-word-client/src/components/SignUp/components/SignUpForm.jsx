@@ -38,7 +38,7 @@ export default function SignUpForm() {
                         <div className="column is-5-tablet is-4-desktop is-3-widescreen">
                             <div className="box has-background-white-ter">
                                 <button className="button is-success" onClick={handleBack}>
-                                    <FontAwesomeIcon icon={faArrowLeft} className="pr-2" /> {content["auth_back_text"]}
+                                    <FontAwesomeIcon icon={faArrowLeft} className="pr-2" /> {content["back_text"]}
                                 </button>
                                 <form onSubmit={formik.handleSubmit}>
                                     <div className="has-text-centered">

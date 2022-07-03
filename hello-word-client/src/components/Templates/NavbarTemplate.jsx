@@ -88,7 +88,7 @@ export default function NavbarTemplate() {
                             </button>
                             <button className="button is-success" onClick={redirect("/signin")}>
                                 <strong>
-                                    <FontAwesomeIcon icon={faSignIn} /> {content["login"]}
+                                    <FontAwesomeIcon icon={faSignIn} /> {content["signin"]}
                                 </strong>
                             </button>
                         </div>

@@ -3,7 +3,7 @@
     "navbar_faq": "FAQ",
     "navbar_terms": "Termes",
     
-    "login": "Connexion",
+    "signin": "Connexion",
     "signup": "S'inscrire",
     
     "header_title": "Hello world!",
@@ -11,9 +11,13 @@
     "header_button_text": "Suite",
 
     "usernameRequiredText": "Nom d'utilisateur est nécessaire",
-    "passwordRequiredText": "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial",
+    "passwordRequiredText": "Mot de passe requis",
+    "passwordStructureRequiredText": "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial",
+    "confirmPasswordRequiredText": "Veuillez confirmer votre mot de passe",
+    "wrongConfirmPasswrdText": "Les mots de passe ne correspondent pas",
 
-    "auth_back_text": "Retour",
+    "back_text": "Retour",
+    
     "auth_username_text": "Nom d'utilisateur",
     "auth_password_text": "Le mot de passe",
     "auth_confirm_password_text": "Confirmez le mot de passe",

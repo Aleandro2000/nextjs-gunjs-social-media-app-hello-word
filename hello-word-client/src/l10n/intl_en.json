@@ -3,7 +3,7 @@
     "navbar_faq": "FAQ",
     "navbar_terms": "Terms&Conditions",
     
-    "login": "Sign In",
+    "signin": "Sign In",
     "signup": "Sign Up",
     
     "header_title": "Hello world!",
@@ -11,11 +11,13 @@
     "header_button_text": "More",
 
     "usernameRequiredText": "Username is required",
-    "passwordRequiredText": "Password must contain at least 8 characters, one uppercase, one number and one special case character",
+    "passwordRequiredText": "Password is required",
+    "passwordStructureRequiredText": "Password must contain at least 8 characters, one uppercase, one number and one special case character",
     "confirmPasswordRequiredText": "Please confirm your password",
-    "WrongConfirmPasswrdText": "Passwords don't match",
+    "wrongConfirmPasswrdText": "Passwords don't match",
 
-    "auth_back_text": "Back",
+    "back_text": "Back",
+    
     "auth_username_text": "Username",
     "auth_password_text": "Password",
     "auth_confirm_password_text": "Confirm Password",

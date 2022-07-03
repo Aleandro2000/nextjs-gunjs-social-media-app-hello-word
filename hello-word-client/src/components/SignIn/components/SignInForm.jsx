@@ -22,7 +22,7 @@ export default function SignInForm() {
         },
         validationSchema: yup.object({
             username: yup.string().required(content["usernameRequiredText"]),
-            password: yup.string().trim().matches(passwordRegex).required(content["passwordRequiredText"]),
+            password: yup.string().required(content["passwordRequiredText"]),
         }),
     });
 
@@ -36,14 +36,14 @@ export default function SignInForm() {
                         <div className="column is-5-tablet is-4-desktop is-3-widescreen">
                             <div className="box has-background-white-ter">
                                 <button className="button is-success" onClick={handleBack}>
-                                    <FontAwesomeIcon icon={faArrowLeft} className="pr-2" /> Back
+                                    <FontAwesomeIcon icon={faArrowLeft} className="pr-2" /> {content["back_text"]}
                                 </button>
                                 <form onSubmit={formik.handleSubmit}>
                                     <div className="has-text-centered">
                                         <img alt="Hello Word logo" src="/media/logo.png" width="200px" height="200px" />
                                     </div>
                                     <div className="field">
-                                        <label htmlFor="Username" className="label">Username</label>
+                                        <label htmlFor={content["auth_username_text"]} className="label">{content["auth_username_text"]}</label>
                                         <div className="control has-icons-left">
                                             <input
                                                 type="text"
@@ -51,7 +51,7 @@ export default function SignInForm() {
                                                 value={formik.values.username}
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
-                                                placeholder="Username"
+                                                placeholder={content["auth_username_text"]}
                                                 className="input" />
                                             <span className="icon is-small is-left">
                                                 <FontAwesomeIcon icon={faUser} />
@@ -62,7 +62,7 @@ export default function SignInForm() {
                                         )}
                                     </div>
                                     <div className="field">
-                                        <label htmlFor="Password" className="label">Password</label>
+                                        <label htmlFor={content["auth_password_text"]} className="label">{content["auth_password_text"]}</label>
                                         <div className="control has-icons-left">
                                             <input
                                                 type="password"
@@ -70,7 +70,7 @@ export default function SignInForm() {
                                                 value={formik.values.password}
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
-                                                placeholder="Password"
+                                                placeholder={content["auth_password_text"]}
                                                 className="input" />
                                             <span className="icon is-small is-left">
                                                 <FontAwesomeIcon icon={faLock} /> 
@@ -82,7 +82,7 @@ export default function SignInForm() {
                                     </div>
                                     <div className="field has-text-centered mt-6">
                                         <button type="submit" className="button is-success">
-                                            <FontAwesomeIcon icon={faSignIn} className="pr-2" /> Sign In
+                                            <FontAwesomeIcon icon={faSignIn} className="pr-2" /> {content["signin"]}
                                         </button>
                                     </div>
                                 </form>
