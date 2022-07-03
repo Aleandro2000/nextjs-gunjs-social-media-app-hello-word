@@ -12,6 +12,13 @@ const createSession = ethId => {
     });
 };
 
+const removeSession = ethId => {
+    gun.get("sessions").put({
+        ethId: null,
+    });
+};
+
 module.exports = {
     createSession,
+    removeSession,
 };

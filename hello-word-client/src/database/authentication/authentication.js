@@ -12,12 +12,12 @@ const register = (username, password, consoleLog) => {
     if (username && password) {
         user.create(username, password, ack => {
             consoleLog ? console.log(ack) : null;
-            ack.err ? displayToast(ack.err, false) : displayToast("Successfull registration!");;
+            ack.err ? displayToast(ack.err, false) : displayToast("SUCESS!");;
             return ack;
         });
     }
     else
-        displayToast("Please complete all credentials!");
+        displayToast("ERROR!");
 };
 
 const login = (username, password, consoleLog) => {
@@ -25,18 +25,17 @@ const login = (username, password, consoleLog) => {
         user.auth(username, password, ack => {
             consoleLog ? console.log(ack) : null;
             if (ack.err)
-                displayToast(ack.err);
+                displayToast(ack.err, false);
             else
-                displayToast("Successfull logged in!");
+                displayToast("SUCCESS!");
             return gun.get(`pub/${ack.pub}`).get();
         });
     else
-        displayToast("Please complete all credentials!", false);
+        displayToast("ERROR!", false);
 };
 
 const logout = () => {
     user.leave();
-    SessionStorage.removeItem("username");
 };
 
 const removeAccount = (username, consoleLog) => {
@@ -45,7 +44,7 @@ const removeAccount = (username, consoleLog) => {
             consoleLog ? console.log(ack) : null;
         });
     else
-        displayToast("Error to remove account!", false);
+        displayToast("ERROR!", false);
 };
 
 module.exports = {
