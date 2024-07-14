@@ -26,7 +26,7 @@ export default function SignInForm() {
     onSubmit: async (values) => {
       try {
         const result = await login(values.username, values.password);
-        setAuthentication(result);
+        setAuthentication(JSON.stringify(result));
         route.replace("/dashboard/page");
       } catch (err) {
         displayToast("ERROR!", false);

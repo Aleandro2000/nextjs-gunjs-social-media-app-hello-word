@@ -8,8 +8,8 @@ const withAuth = (Component) => {
     const router = useRouter();
 
     useEffect(() => {
-      if (authentication) router.replace("/dashboard/page");
-    }, []);
+      if (!authentication) router.replace("/");
+    }, [authentication, router]);
 
     return <Component {...props} />;
   };
