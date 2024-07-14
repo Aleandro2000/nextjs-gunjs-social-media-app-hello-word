@@ -11,10 +11,12 @@ export const user = gun.user().recall({ sessionStorage: true });
 const register = async (username, password, consoleLog) => {
   try {
     if (username && password) {
-      return await user.create(username, password, (ack) => {
+      const result = await user.create(username, password, (ack) => {
         consoleLog ? console.log(ack) : null;
         ack.err ? displayToast(ack.err, false) : displayToast("SUCESS!");
       });
+      await user.get("alias").put(username);
+      return result;
     }
     displayToast("ERROR!", false);
     return null;

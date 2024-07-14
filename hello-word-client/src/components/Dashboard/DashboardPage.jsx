@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { gun } from "../../database/authentication/authentication";
+import { gun, user } from "../../database/authentication/authentication";
 import {
   logout,
   removeAccount,
@@ -11,8 +11,22 @@ import { AuthenticationContext } from "../../contexts/AuthenticationContext";
 export default function DashboardPage() {
   const [posts, setPosts] = useState({});
   const [newPost, setNewPost] = useState("");
+  const [username, setUsername] = useState();
   const [, setAuthentication] = useContext(AuthenticationContext);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchAlias = async () => {
+      try {
+        const alias = await user.get("alias").then();
+        setUsername(alias);
+      } catch (error) {
+        setUsername(null);
+      }
+    };
+
+    fetchAlias();
+  }, []);
 
   useEffect(() => {
     const postsRef = gun?.get("posts");
@@ -29,12 +43,12 @@ export default function DashboardPage() {
     const id = uuid();
     postsRef
       ?.get(id)
-      .put({ content: newPost, createdAt: Date.now(), author: user });
+      .put({ content: newPost, createdAt: Date.now(), author: username });
     setNewPost("");
   };
 
   const deletePost = (id) => {
-    if (posts[id].author !== user)
+    if (posts[id].author !== username)
       return alert("You can only delete your own posts.");
     gun?.get("posts").get(id).put(null);
     setPosts((prevPosts) => {
@@ -45,12 +59,12 @@ export default function DashboardPage() {
   };
 
   const editPost = (id, content) => {
-    if (posts[id].author !== user)
+    if (posts[id].author !== username)
       return alert("You can only edit your own posts.");
     gun
       ?.get("posts")
       .get(id)
-      .put({ content, updatedAt: Date.now(), author: user });
+      .put({ content, updatedAt: Date.now(), author: username });
   };
 
   const handleLogout = () => {
@@ -59,7 +73,7 @@ export default function DashboardPage() {
     router.replace("/");
   };
 
-  const handleRemoveAccount = async () => {
+  const handleRemoveAccount = () => {
     removeAccount(username, true);
     setAuthentication();
     router.replace("/");
@@ -102,9 +116,9 @@ export default function DashboardPage() {
                 type="text"
                 value={posts[id].content}
                 onChange={(e) => editPost(id, e.target.value)}
-                disabled={posts[id].author !== user}
+                disabled={posts[id].author !== username}
               />
-              {posts[id].author === user && (
+              {posts[id].author === username && (
                 <button
                   className="button is-danger"
                   onClick={() => deletePost(id)}
