@@ -3,53 +3,58 @@ import "gun/sea";
 import "gun/axe";
 import { displayToast } from "../../utils";
 
-const gun = Gun({
-    peers: process.env.API_URL
+export const gun = Gun({
+  peers: process.env.API_URL,
 });
-const user = gun.user().recall({ sessionStorage: true });
+export const user = gun.user().recall({ sessionStorage: true });
 
-const register = (username, password, consoleLog) => {
+const register = async (username, password, consoleLog) => {
+  try {
     if (username && password) {
-        user.create(username, password, ack => {
-            consoleLog ? console.log(ack) : null;
-            ack.err ? displayToast(ack.err, false) : displayToast("SUCESS!");;
-            return ack;
-        });
+      return await user.create(username, password, (ack) => {
+        consoleLog ? console.log(ack) : null;
+        ack.err ? displayToast(ack.err, false) : displayToast("SUCESS!");
+      });
     }
-    else
-        displayToast("ERROR!");
+    displayToast("ERROR!", false);
+    return null;
+  } catch (err) {
+    displayToast("ERROR!", false);
+    return null;
+  }
 };
 
-const login = (username, password, consoleLog) => {
+const login = async (username, password, consoleLog) => {
+  try {
     if (username && password)
-        user.auth(username, password, ack => {
-            consoleLog ? console.log(ack) : null;
-            if (ack.err)
-                displayToast(ack.err, false);
-            else
-                displayToast("SUCCESS!");
-            return gun.get(`pub/${ack.pub}`).get();
-        });
-    else
-        displayToast("ERROR!", false);
+      return await user.auth(username, password, (ack) => {
+        consoleLog ? console.log(ack) : null;
+        if (ack.err) displayToast(ack.err, false);
+        else displayToast("SUCCESS!");
+      });
+    displayToast("ERROR!", false, false);
+    return null;
+  } catch (err) {
+    displayToast("ERROR!", false, false);
+    return null;
+  }
 };
 
-const logout = () => {
-    user.leave();
+export const logout = () => {
+  user.leave();
 };
 
-const removeAccount = (username, consoleLog) => {
-    if (username)
-        user.delete(username, ack => {
-            consoleLog ? console.log(ack) : null;
-        });
-    else
-        displayToast("ERROR!", false);
+export const removeAccount = (username, consoleLog) => {
+  if (username)
+    user.delete(username, (ack) => {
+      consoleLog ? console.log(ack) : null;
+    });
+  else displayToast("ERROR!", false, false);
 };
 
 module.exports = {
-    register,
-    login,
-    logout,
-    removeAccount
+  register,
+  login,
+  logout,
+  removeAccount,
 };
