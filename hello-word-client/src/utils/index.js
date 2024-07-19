@@ -3,7 +3,7 @@ import alerts from "./alerts";
 import regex from "./regex";
 
 module.exports = {
-    ...utils,
-    ...alerts,
-    ...regex,
+  ...utils,
+  ...alerts,
+  ...regex,
 };

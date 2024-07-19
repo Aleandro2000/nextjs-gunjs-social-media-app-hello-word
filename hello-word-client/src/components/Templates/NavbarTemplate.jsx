@@ -75,16 +75,9 @@ export default function NavbarTemplate() {
 
       <div id="navbar" className={`navbar-menu ${active ? "is-active" : ""}`}>
         <div className="navbar-start">
-          <a className="navbar-item">{content["navbar_home"]}</a>
-
-          {/*<a className="navbar-item">
-                        {content["navbar_faq"]}
-                    </a>*/}
-
-          {/*<a className="navbar-item">
-                        {content["navbar_terms"]}
-                    </a>*/}
-
+          <span className="navbar-item has-text-weight-bold">
+            {content["navbar_home"]}
+          </span>
           <div className="navbar-item has-dropdown is-hoverable">
             <a className="navbar-link">{language}</a>
             <center className="navbar-dropdown">
