@@ -9,7 +9,7 @@ import {
 } from "../../contexts/LanguageContext";
 import { language_list, appContent } from "../../l10n";
 import { useRouter } from "next/router";
-import { logger } from "ethers";
+import { logger } from "../../utils";
 
 export default function NavbarTemplate() {
   const [language, setLanguage] = useContext(LanguageContext);
