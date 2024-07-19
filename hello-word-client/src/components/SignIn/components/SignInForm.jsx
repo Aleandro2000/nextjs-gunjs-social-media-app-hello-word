@@ -17,6 +17,7 @@ export default function SignInForm() {
   const [content] = useContext(ContentContext);
   const { login } = useContext(AuthenticationContext);
   const { recordEngagement } = useAnalyticsFunctions();
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -27,6 +28,7 @@ export default function SignInForm() {
     },
     onSubmit: async (values) => {
       try {
+        setLoading(true);
         const result = await login(values.username, values.password);
         if (result) {
           recordEngagement("login", values.username, 0); // Record login engagement
@@ -36,6 +38,8 @@ export default function SignInForm() {
         }
       } catch (err) {
         console.error("Login error:", err);
+      } finally {
+        setLoading(false);
       }
     },
     validationSchema: yup.object({
@@ -121,9 +125,13 @@ export default function SignInForm() {
                     )}
                   </div>
                   <div className="field has-text-centered mt-6">
-                    <button type="submit" className="button is-success">
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="button is-success"
+                    >
                       <FontAwesomeIcon icon={faSignIn} className="pr-2" />{" "}
-                      {content["signin"]}
+                      {loading ? "Loading..." : content["signin"]}
                     </button>
                   </div>
                 </form>

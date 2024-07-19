@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import * as yup from "yup";
 import { AuthenticationContext } from "../../../contexts/AuthenticationContext";
 import { ContentContext } from "../../../contexts/LanguageContext";
@@ -18,6 +18,7 @@ export default function SignUpForm() {
   const [content] = useContext(ContentContext);
   const { register } = useContext(AuthenticationContext);
   const { recordNewUser } = useAnalyticsFunctions();
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -29,15 +30,18 @@ export default function SignUpForm() {
     },
     onSubmit: async (values) => {
       try {
+        setLoading(true);
         const result = await register(values.username, values.password);
         if (result) {
           recordNewUser(); // Record new user in analytics
-          router.push("/dashboard/page");
+          router.push("/");
         } else {
           console.error("Registration failed");
         }
       } catch (err) {
         console.error("Registration error:", err);
+      } finally {
+        setLoading(false);
       }
     },
     validationSchema: yup.object({
@@ -162,9 +166,13 @@ export default function SignUpForm() {
                     )}
                   </div>
                   <div className="field has-text-centered mt-6">
-                    <button type="submit" className="button is-success">
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="button is-success"
+                    >
                       <FontAwesomeIcon icon={faSignIn} className="pr-2" />{" "}
-                      {content["signup"]}
+                      {loading ? "Loading..." : content["signup"]}
                     </button>
                   </div>
                 </form>
