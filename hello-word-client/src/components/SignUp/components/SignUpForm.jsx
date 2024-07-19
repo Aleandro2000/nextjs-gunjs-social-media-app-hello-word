@@ -33,17 +33,18 @@ export default function SignUpForm() {
       try {
         setLoading(true);
         const result = await register(values.username, values.password);
+        alert(JSON.stringify(result))
         if (result) {
-          recordNewUser(); // Record new user in analytics
+          recordNewUser();
           router.push("/");
         } else {
           logger("Registration failed");
           displayToast("Registration failed", false);
         }
-        setLoading(false);
       } catch (err) {
         logger("Registration error:", err);
         displayToast("Registration error", false);
+      } finally {
         setLoading(false);
       }
     },
@@ -65,7 +66,7 @@ export default function SignUpForm() {
     }),
   });
 
-  const handleBack = () => router.back();
+  const handleBack = () => router.replace("/");
 
   return (
     <div className="hero is-fullheight">

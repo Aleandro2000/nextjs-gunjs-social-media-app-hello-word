@@ -5,47 +5,47 @@ import Sidebar from "../components/Posts/components/Sidebar";
 import { AuthenticationContext } from "../contexts/AuthenticationContext";
 
 const withAuth = (Component) => {
-	const Auth = (props) => {
-		const { authentication, user, loading } = useContext(AuthenticationContext);
-		const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-		const router = useRouter();
+  const Auth = (props) => {
+    const { authentication, user, loading } = useContext(AuthenticationContext);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const router = useRouter();
 
-		useEffect(() => {
-			if (!loading && !authentication) {
-				router.replace("/");
-			}
-		}, [authentication, loading, router]);
+    useEffect(() => {
+      if (!loading && !authentication) {
+        router.replace("/");
+      }
+    }, [authentication, loading, router]);
 
-		const toggleSidebar = () => {
-			setIsSidebarOpen(!isSidebarOpen);
-		};
+    const toggleSidebar = () => {
+      setIsSidebarOpen(!isSidebarOpen);
+    };
 
-		if (loading) {
-			return <div>Loading...</div>; // Or a loading spinner
-		}
+    if (loading) {
+      return <div>Loading...</div>; // Or a loading spinner
+    }
 
-		console.log("user", user);
-		// Check if authentication exists
-		if (authentication) {
-			return (
-				<div className="min-h-screen bg-gray-100">
-					<Navbar userPoints={user.userPoints} toggleSidebar={toggleSidebar} />
-					<Sidebar isOpen={isSidebarOpen} />
-					<div
-						className={`pt-20 transition-all duration-300 ${
-							isSidebarOpen ? "pl-64" : "pl-0"
-						}`}
-					>
-						<Component {...props} />
-					</div>
-				</div>
-			);
-		}
+    console.log("user", user);
+    // Check if authentication exists
+    if (authentication) {
+      return (
+        <div className="min-h-screen bg-gray-100">
+          <Navbar userPoints={user.userPoints} toggleSidebar={toggleSidebar} />
+          <Sidebar isOpen={isSidebarOpen} />
+          <div
+            className={`pt-20 transition-all duration-300 ${
+              isSidebarOpen ? "pl-64" : "pl-0"
+            }`}
+          >
+            <Component {...props} />
+          </div>
+        </div>
+      );
+    }
 
-		return null;
-	};
+    return null;
+  };
 
-	return Auth;
+  return Auth;
 };
 
 export default withAuth;

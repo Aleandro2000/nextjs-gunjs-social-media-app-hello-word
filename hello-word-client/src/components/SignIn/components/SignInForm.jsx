@@ -32,16 +32,16 @@ export default function SignInForm() {
         setLoading(true);
         const result = await login(values.username, values.password);
         if (result) {
-          recordEngagement("login", values.username, 0); // Record login engagement
+          recordEngagement("login", values.username, 0);
           router.push("/dashboard/page");
         } else {
           logger("Login failed");
           displayToast("Login failed", false);
         }
-        setLoading(false);
       } catch (err) {
         logger("Login error:", err);
         displayToast("Login error", false);
+      } finally {
         setLoading(false);
       }
     },
@@ -51,7 +51,7 @@ export default function SignInForm() {
     }),
   });
 
-  const handleBack = () => router.back();
+  const handleBack = () => router.replace("/");
 
   return (
     <div className="hero is-fullheight">

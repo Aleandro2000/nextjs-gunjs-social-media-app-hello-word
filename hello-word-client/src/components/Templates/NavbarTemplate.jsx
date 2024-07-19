@@ -81,7 +81,9 @@ export default function NavbarTemplate() {
             {content["navbar_home"]}
           </span>
           <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link">{language}</a>
+            <a href="#!" className="navbar-link">
+              {language?.toUpperCase()}
+            </a>
             <center className="navbar-dropdown">
               {language_list.map((item, key) => {
                 return (
@@ -90,7 +92,7 @@ export default function NavbarTemplate() {
                     key={key}
                     onClick={changeLanguage(item)}
                   >
-                    {item}
+                    {item?.toUpperCase()}
                   </button>
                 );
               })}

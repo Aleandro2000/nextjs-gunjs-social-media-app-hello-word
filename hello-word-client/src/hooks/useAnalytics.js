@@ -107,7 +107,7 @@ export const useAnalytics = () => {
 
       return new Promise((resolve, reject) => {
         gun
-          .get(`user_analytics`)
+          .get("user_analytics")
           .get(username)
           .once((data) => {
             console.log("Raw user analytics data:", data);
@@ -130,7 +130,7 @@ export const useAnalytics = () => {
                 pointsHistory: [],
                 recentActivity: [],
               };
-              gun.get(`user_analytics`).get(username).put(defaultData);
+              gun.get("user_analytics").get(username).put(defaultData);
               resolve(defaultData);
             }
           });
@@ -146,99 +146,99 @@ export const useAnalytics = () => {
       const analyticsRef = gun.get("analytics");
 
       switch (type) {
-        case "newPost":
-          analyticsRef.get("totalPosts").once((val) => {
-            const newTotal = (val || 0) + 1;
-            analyticsRef.get("totalPosts").put(newTotal);
-            analyticsRef
-              .get("totalPostsChange")
-              .put((((newTotal - val) / val) * 100).toFixed(2));
-          });
-          break;
-        case "newUser":
-          analyticsRef.get("activeUsers").once((val) => {
-            const newTotal = (val || 0) + 1;
-            analyticsRef.get("activeUsers").put(newTotal);
-          });
-          break;
-        case "newEngagement":
-          analyticsRef.get("totalEngagement").once((val) => {
-            const newTotal = (val || 0) + 1;
-            analyticsRef.get("totalEngagement").put(newTotal);
-            analyticsRef
-              .get("totalEngagementChange")
-              .put((((newTotal - val) / val) * 100).toFixed(2));
-          });
+      case "newPost":
+        analyticsRef.get("totalPosts").once((val) => {
+          const newTotal = (val || 0) + 1;
+          analyticsRef.get("totalPosts").put(newTotal);
           analyticsRef
-            .get("engagementBreakdown")
-            .get(data.type)
-            .once((val) => {
-              analyticsRef
-                .get("engagementBreakdown")
-                .get(data.type)
-                .put((val || 0) + 1);
-            });
-          break;
-        case "updatePostActivity":
-          analyticsRef.get("postActivity").once((activities) => {
-            const updatedActivities = activities || [];
-            const todayIndex = updatedActivities.findIndex(
-              (a) => a.date === data.date
-            );
-            if (todayIndex !== -1) {
-              updatedActivities[todayIndex].posts += 1;
-            } else {
-              updatedActivities.push({ date: data.date, posts: 1 });
-            }
-            // Keep only the last 7 days
-            const sortedActivities = updatedActivities
-              .sort((a, b) => new Date(b.date) - new Date(a.date))
-              .slice(0, 7);
-            analyticsRef.get("postActivity").put(sortedActivities);
+            .get("totalPostsChange")
+            .put((((newTotal - val) / val) * 100).toFixed(2));
+        });
+        break;
+      case "newUser":
+        analyticsRef.get("activeUsers").once((val) => {
+          const newTotal = (val || 0) + 1;
+          analyticsRef.get("activeUsers").put(newTotal);
+        });
+        break;
+      case "newEngagement":
+        analyticsRef.get("totalEngagement").once((val) => {
+          const newTotal = (val || 0) + 1;
+          analyticsRef.get("totalEngagement").put(newTotal);
+          analyticsRef
+            .get("totalEngagementChange")
+            .put((((newTotal - val) / val) * 100).toFixed(2));
+        });
+        analyticsRef
+          .get("engagementBreakdown")
+          .get(data.type)
+          .once((val) => {
+            analyticsRef
+              .get("engagementBreakdown")
+              .get(data.type)
+              .put((val || 0) + 1);
           });
-          break;
-        case "updatePostPoints":
-          analyticsRef.get("averagePointsPerPost").once((avg) => {
-            analyticsRef.get("totalPosts").once((totalPosts) => {
-              const newAverage =
+        break;
+      case "updatePostActivity":
+        analyticsRef.get("postActivity").once((activities) => {
+          const updatedActivities = activities || [];
+          const todayIndex = updatedActivities.findIndex(
+            (a) => a.date === data.date
+          );
+          if (todayIndex !== -1) {
+            updatedActivities[todayIndex].posts += 1;
+          } else {
+            updatedActivities.push({ date: data.date, posts: 1 });
+          }
+          // Keep only the last 7 days
+          const sortedActivities = updatedActivities
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .slice(0, 7);
+          analyticsRef.get("postActivity").put(sortedActivities);
+        });
+        break;
+      case "updatePostPoints":
+        analyticsRef.get("averagePointsPerPost").once((avg) => {
+          analyticsRef.get("totalPosts").once((totalPosts) => {
+            const newAverage =
                 ((avg || 0) * totalPosts + data.points) / totalPosts;
-              analyticsRef.get("averagePointsPerPost").put(newAverage);
-              analyticsRef
-                .get("averagePointsPerPostChange")
-                .put((((newAverage - avg) / avg) * 100).toFixed(2));
+            analyticsRef.get("averagePointsPerPost").put(newAverage);
+            analyticsRef
+              .get("averagePointsPerPostChange")
+              .put((((newAverage - avg) / avg) * 100).toFixed(2));
+          });
+        });
+        // Update top performing posts
+        analyticsRef.get("topPerformingPosts").once((topPosts) => {
+          let updatedTopPosts = topPosts || [];
+          const existingIndex = updatedTopPosts.findIndex(
+            (post) => post.id === data.postId
+          );
+          if (existingIndex !== -1) {
+            updatedTopPosts[existingIndex].points = data.newTotalPoints;
+          } else {
+            updatedTopPosts.push({
+              id: data.postId,
+              title: data.title,
+              points: data.newTotalPoints,
             });
-          });
-          // Update top performing posts
-          analyticsRef.get("topPerformingPosts").once((topPosts) => {
-            let updatedTopPosts = topPosts || [];
-            const existingIndex = updatedTopPosts.findIndex(
-              (post) => post.id === data.postId
-            );
-            if (existingIndex !== -1) {
-              updatedTopPosts[existingIndex].points = data.newTotalPoints;
-            } else {
-              updatedTopPosts.push({
-                id: data.postId,
-                title: data.title,
-                points: data.newTotalPoints,
-              });
-            }
-            updatedTopPosts.sort((a, b) => b.points - a.points);
-            updatedTopPosts = updatedTopPosts.slice(0, 5); // Keep only top 5
-            analyticsRef.get("topPerformingPosts").put(updatedTopPosts);
-          });
-          break;
-        case "updateUserAnalytics":
-          gun.get("user_analytics").get(data.username).put({
-            points: data.points,
-            totalPosts: data.totalPosts,
-            rank: data.rank,
-            pointsHistory: data.pointsHistory,
-            recentActivity: data.recentActivity,
-          });
-          break;
-        default:
-          console.error("Unknown analytics update type:", type);
+          }
+          updatedTopPosts.sort((a, b) => b.points - a.points);
+          updatedTopPosts = updatedTopPosts.slice(0, 5); // Keep only top 5
+          analyticsRef.get("topPerformingPosts").put(updatedTopPosts);
+        });
+        break;
+      case "updateUserAnalytics":
+        gun.get("user_analytics").get(data.username).put({
+          points: data.points,
+          totalPosts: data.totalPosts,
+          rank: data.rank,
+          pointsHistory: data.pointsHistory,
+          recentActivity: data.recentActivity,
+        });
+        break;
+      default:
+        console.error("Unknown analytics update type:", type);
       }
     },
     [gun]
