@@ -1,7 +1,7 @@
 import "gun/axe";
 import Gun from "gun/gun";
 import "gun/sea";
-import { displayToast } from "../../utils";
+import { displayToast, logger } from "../../utils";
 
 export const gun = Gun({
   peers: process.env.NEXT_PUBLIC_URL ?? "http://localhost:8081/",
@@ -9,7 +9,7 @@ export const gun = Gun({
 
 export const user = gun.user().recall({ sessionStorage: true });
 
-const register = async (username, password, consoleLog) => {
+const register = async (username, password) => {
   try {
     if (username && password) {
       const result = await user.create(username, password, (ack) => {
@@ -21,12 +21,13 @@ const register = async (username, password, consoleLog) => {
     displayToast("ERROR!", false);
     return null;
   } catch (err) {
+    logger(err);
     displayToast("ERROR!", false);
     return null;
   }
 };
 
-const login = async (username, password, consoleLog) => {
+const login = async (username, password) => {
   try {
     console.log("username", username);
     if (username && password) {
@@ -42,6 +43,7 @@ const login = async (username, password, consoleLog) => {
     displayToast("ERROR!", false, false);
     return null;
   } catch (err) {
+    logger(err);
     displayToast("ERROR!", false, false);
     return null;
   }
@@ -52,7 +54,7 @@ export const logout = () => {
   sessionStorage.clear();
 };
 
-export const removeAccount = (username, consoleLog) => {
+export const removeAccount = (username) => {
   if (username)
     user.delete(username, (ack) => {
       sessionStorage.clear();

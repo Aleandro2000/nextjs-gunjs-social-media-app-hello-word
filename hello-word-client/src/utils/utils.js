@@ -1,7 +1,10 @@
 import { ethers } from "ethers";
 
-const logger = (err) =>
-  process.env.NEXT_PUBLIC_ENV !== "production" && console.log(err);
+const logger = (err) => {
+  if (process.env.NEXT_PUBLIC_ENV !== "production") {
+    console.log(err);
+  }
+};
 
 const SessionStorage = {
   getItem: (item) => {
