@@ -13,6 +13,7 @@ import { AuthenticationContext } from "../../../contexts/AuthenticationContext";
 import { ContentContext } from "../../../contexts/LanguageContext";
 import { useAnalyticsFunctions } from "../../../utils/analyticsFunctions";
 import { passwordRegex } from "../../../utils/regex";
+import { logger, displayToast } from "../../../utils";
 
 export default function SignUpForm() {
   const [content] = useContext(ContentContext);
@@ -36,11 +37,13 @@ export default function SignUpForm() {
           recordNewUser(); // Record new user in analytics
           router.push("/");
         } else {
-          console.error("Registration failed");
+          logger("Registration failed");
+          displayToast("Registration failed", false);
         }
+        setLoading(false);
       } catch (err) {
-        console.error("Registration error:", err);
-      } finally {
+        logger("Registration error:", err);
+        displayToast("Registration error", false);
         setLoading(false);
       }
     },

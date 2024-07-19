@@ -7,11 +7,12 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import * as yup from "yup";
 import { AuthenticationContext } from "../../../contexts/AuthenticationContext";
 import { ContentContext } from "../../../contexts/LanguageContext";
 import { useAnalyticsFunctions } from "../../../utils/analyticsFunctions";
+import { logger, displayToast } from "../../../utils";
 
 export default function SignInForm() {
   const [content] = useContext(ContentContext);
@@ -34,11 +35,13 @@ export default function SignInForm() {
           recordEngagement("login", values.username, 0); // Record login engagement
           router.push("/dashboard/page");
         } else {
-          console.error("Login failed");
+          logger("Login failed");
+          displayToast("Login failed", false);
         }
+        setLoading(false);
       } catch (err) {
-        console.error("Login error:", err);
-      } finally {
+        logger("Login error:", err);
+        displayToast("Login error", false);
         setLoading(false);
       }
     },
