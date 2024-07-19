@@ -3,7 +3,7 @@ import withAuth from "../../src/HOCs/withAuth";
 import AnalyticsPage from "../../src/components/Analytics/AnalyticsPage";
 
 function Analytics() {
-	return <AnalyticsPage />;
+  return <AnalyticsPage />;
 }
 
 export default withAuth(Analytics);

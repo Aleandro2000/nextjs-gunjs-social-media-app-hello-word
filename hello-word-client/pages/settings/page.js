@@ -3,7 +3,7 @@ import withAuth from "../../src/HOCs/withAuth";
 import SettingsPage from "../../src/components/Settings/SettingsPage";
 
 function Settings() {
-	return <SettingsPage />;
+  return <SettingsPage />;
 }
 
 export default withAuth(Settings);

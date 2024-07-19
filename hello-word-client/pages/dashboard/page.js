@@ -3,7 +3,7 @@ import withAuth from "../../src/HOCs/withAuth";
 import DashboardPage from "../../src/components/Dashboard/DashboardPage";
 
 function Dashboard() {
-	return <DashboardPage />;
+  return <DashboardPage />;
 }
 
 export default withAuth(Dashboard);

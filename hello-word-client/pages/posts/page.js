@@ -3,7 +3,7 @@ import withAuth from "../../src/HOCs/withAuth";
 import PostsPage from "../../src/components/Posts/PostsPage";
 
 function Posts() {
-	return <PostsPage />;
+  return <PostsPage />;
 }
 
 export default withAuth(Posts);
