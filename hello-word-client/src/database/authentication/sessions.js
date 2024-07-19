@@ -1,9 +1,16 @@
-import Gun from "gun/gun";
-import "gun/sea";
 import "gun/axe";
+import "gun/sea";
 
-const gun = Gun({
-  peers: process.env.API_URL,
+export const gun = Gun({
+  peers: [
+    process.env.NEXT_PUBLIC_URL
+      ? `${process.env.NEXT_PUBLIC_URL}/gun`
+      : "http://localhost:8081/gun",
+  ],
+  localStorage: false,
+  radisk: false,
+  retry: Infinity,
+  reconnect: 500,
 });
 
 const createSession = (ethId) => {

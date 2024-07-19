@@ -9,6 +9,7 @@ import {
 } from "../../contexts/LanguageContext";
 import { language_list, appContent } from "../../l10n";
 import { useRouter } from "next/router";
+import { logger } from "../../utils";
 
 export default function NavbarTemplate() {
   const [language, setLanguage] = useContext(LanguageContext);
@@ -34,6 +35,7 @@ export default function NavbarTemplate() {
         displayToast(content["metamask_message_success"]);
       } else displayToast(content["metamask_message_fail"], false);
     } catch (err) {
+      logger(err);
       displayToast(content["metamask_message_fail"], false);
     }
   };
@@ -75,16 +77,9 @@ export default function NavbarTemplate() {
 
       <div id="navbar" className={`navbar-menu ${active ? "is-active" : ""}`}>
         <div className="navbar-start">
-          <a className="navbar-item">{content["navbar_home"]}</a>
-
-          {/*<a className="navbar-item">
-                        {content["navbar_faq"]}
-                    </a>*/}
-
-          {/*<a className="navbar-item">
-                        {content["navbar_terms"]}
-                    </a>*/}
-
+          <span className="navbar-item has-text-weight-bold">
+            {content["navbar_home"]}
+          </span>
           <div className="navbar-item has-dropdown is-hoverable">
             <a className="navbar-link">{language}</a>
             <center className="navbar-dropdown">

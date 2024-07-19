@@ -1,138 +1,178 @@
 import React, { useContext, useEffect, useState } from "react";
-import { gun, user } from "../../database/authentication/authentication";
 import {
-  logout,
-  removeAccount,
-} from "../../database/authentication/authentication";
-import { uuid } from "uuidv4";
-import { useRouter } from "next/router";
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import { AuthenticationContext } from "../../contexts/AuthenticationContext";
+import { useAnalytics } from "../../hooks/useAnalytics";
 
-export default function DashboardPage() {
-  const [posts, setPosts] = useState({});
-  const [newPost, setNewPost] = useState("");
-  const [username, setUsername] = useState();
-  const [, setAuthentication] = useContext(AuthenticationContext);
-  const router = useRouter();
+const StatCard = ({ title, value, icon }) => (
+  <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="flex items-center justify-between">
+      <div>
+        <p className="text-sm font-medium text-gray-500 mb-1">{title}</p>
+        <p className="text-2xl font-semibold text-gray-900">{value}</p>
+      </div>
+      <div className="text-green-500 text-2xl">{icon}</div>
+    </div>
+  </div>
+);
+
+const TrendingTopic = ({ topic, posts }) => (
+  <div className="flex items-center justify-between py-2">
+    <span className="text-sm font-medium text-gray-600">#{topic}</span>
+    <span className="text-xs font-medium text-gray-500">{posts} posts</span>
+  </div>
+);
+
+const DashboardPage = () => {
+  const { authentication } = useContext(AuthenticationContext);
+  const { analytics, fetchUserAnalytics } = useAnalytics();
+  const [userAnalytics, setUserAnalytics] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchAlias = async () => {
-      try {
-        const alias = await user.get("alias").then();
-        setUsername(alias);
-      } catch (error) {
-        setUsername(null);
+    const fetchData = async () => {
+      if (authentication && authentication.username) {
+        try {
+          const data = await fetchUserAnalytics(authentication.username);
+          setUserAnalytics(data);
+        } catch (error) {
+          console.error("Error fetching user analytics:", error);
+        } finally {
+          setLoading(false);
+        }
       }
     };
 
-    fetchAlias();
-  }, []);
+    fetchData();
+  }, [authentication, fetchUserAnalytics]);
 
-  useEffect(() => {
-    const postsRef = gun?.get("posts");
-    postsRef?.map().on((post, id) => {
-      setPosts((prevPosts) => ({
-        ...prevPosts,
-        [id]: { ...post, id },
-      }));
-    });
-  }, []);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-  const addPost = () => {
-    const postsRef = gun?.get("posts");
-    const id = uuid();
-    postsRef
-      ?.get(id)
-      .put({ content: newPost, createdAt: Date.now(), author: username });
-    setNewPost("");
-  };
+  if (!userAnalytics) {
+    return <div>Error loading user analytics. Please try again later.</div>;
+  }
 
-  const deletePost = (id) => {
-    if (posts[id].author !== username)
-      return alert("You can only delete your own posts.");
-    gun?.get("posts").get(id).put(null);
-    setPosts((prevPosts) => {
-      const updatedPosts = { ...prevPosts };
-      delete updatedPosts[id];
-      return updatedPosts;
-    });
-  };
-
-  const editPost = (id, content) => {
-    if (posts[id].author !== username)
-      return alert("You can only edit your own posts.");
-    gun
-      ?.get("posts")
-      .get(id)
-      .put({ content, updatedAt: Date.now(), author: username });
-  };
-
-  const handleLogout = () => {
-    logout();
-    setAuthentication();
-    router.replace("/");
-  };
-
-  const handleRemoveAccount = () => {
-    removeAccount(username, true);
-    setAuthentication();
-    router.replace("/");
-  };
+  const visibilityStatus =
+    userAnalytics.points >= 0 ? "Visible to All" : "Shadow Banned";
 
   return (
-    <div className="container">
-      <div className="control">
-        <button className="button is-link" onClick={handleLogout}>
-          Logout
-        </button>
-        <button className="button is-danger" onClick={handleRemoveAccount}>
-          Remove Account
-        </button>
-      </div>
-      <h1 className="title my-5">DASHBOARD</h1>
-      <div>
-        <div className="field">
-          <label className="label">New Post</label>
-          <div className="control">
-            <input
-              className="input"
-              type="text"
-              value={newPost}
-              onChange={(e) => setNewPost(e.target.value)}
-              placeholder="Write a new post..."
-            />
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h1 className="text-3xl font-bold text-gray-900 mb-8">Dashboard</h1>
+
+      {/* User Points and Status */}
+      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+          Your Status
+        </h2>
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-gray-500 mb-1">
+              Current Points
+            </p>
+            <p className="text-4xl font-bold text-green-600">
+              {userAnalytics.points}
+            </p>
           </div>
-          <div className="control my-5">
-            <button className="button is-primary" onClick={addPost}>
-              Add Post
-            </button>
+          <div>
+            <p className="text-sm font-medium text-gray-500 mb-1">
+              Visibility Status
+            </p>
+            <p
+              className={`text-lg font-semibold ${
+                userAnalytics.points >= 0 ? "text-green-600" : "text-red-600"
+              }`}
+            >
+              {visibilityStatus}
+            </p>
           </div>
         </div>
-        <ul>
-          {Object.keys(posts).map((id) => (
-            <li key={id} className="box">
-              <input
-                className="input"
-                type="text"
-                value={posts[id].content}
-                onChange={(e) => editPost(id, e.target.value)}
-                disabled={posts[id].author !== username}
+      </div>
+
+      {/* Points History Chart */}
+      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          Points History
+        </h2>
+        <div className="h-64">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={userAnalytics.pointsHistory}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="points"
+                stroke="#10B981"
+                strokeWidth={2}
               />
-              {posts[id].author === username && (
-                <button
-                  className="button is-danger"
-                  onClick={() => deletePost(id)}
-                >
-                  Delete
-                </button>
-              )}
-              <p>
-                <strong>Author:</strong> {posts[id].author}
-              </p>
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      {/* Quick Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <StatCard
+          title="Total Posts"
+          value={userAnalytics.totalPosts}
+          icon="📝"
+        />
+        <StatCard
+          title="Active Users"
+          value={analytics.activeUsers}
+          icon="👥"
+        />
+        <StatCard
+          title="Your Rank"
+          value={`#${userAnalytics.rank}`}
+          icon="🏆"
+        />
+      </div>
+
+      {/* Trending Topics */}
+      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          Trending Topics
+        </h2>
+        <div className="space-y-2">
+          {analytics?.trendingTopics?.map((topic, index) => (
+            <TrendingTopic
+              key={index}
+              topic={topic.topic}
+              posts={topic.posts}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Recent Activity */}
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          Recent Activity
+        </h2>
+        <ul className="space-y-4">
+          {userAnalytics.recentActivity.map((activity, index) => (
+            <li key={index} className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">{activity.action}</span>
+              <span className="text-sm font-semibold text-green-600">
+                +{activity.points} points
+              </span>
             </li>
           ))}
         </ul>
       </div>
     </div>
   );
-}
+};
+
+export default DashboardPage;

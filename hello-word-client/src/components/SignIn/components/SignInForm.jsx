@@ -1,22 +1,26 @@
-import React, { useContext } from "react";
-import { useRouter } from "next/router";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faSignIn,
   faArrowLeft,
-  faUser,
   faLock,
+  faSignIn,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { login } from "../../../database";
-import { ContentContext } from "../../../contexts/LanguageContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useFormik } from "formik";
+import { useRouter } from "next/router";
+import React, { useContext, useState } from "react";
+import * as yup from "yup";
 import { AuthenticationContext } from "../../../contexts/AuthenticationContext";
+import { ContentContext } from "../../../contexts/LanguageContext";
+import { useAnalyticsFunctions } from "../../../utils/analyticsFunctions";
+import { logger, displayToast } from "../../../utils";
 
 export default function SignInForm() {
-  const [content, setContent] = useContext(ContentContext);
-  const [, setAuthentication] = useContext(AuthenticationContext);
-  const route = useRouter();
+  const [content] = useContext(ContentContext);
+  const { login } = useContext(AuthenticationContext);
+  const { recordEngagement } = useAnalyticsFunctions();
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -25,11 +29,20 @@ export default function SignInForm() {
     },
     onSubmit: async (values) => {
       try {
+        setLoading(true);
         const result = await login(values.username, values.password);
-        setAuthentication(JSON.stringify(result));
-        route.replace("/dashboard/page");
+        if (result) {
+          recordEngagement("login", values.username, 0); // Record login engagement
+          router.push("/dashboard/page");
+        } else {
+          logger("Login failed");
+          displayToast("Login failed", false);
+        }
+        setLoading(false);
       } catch (err) {
-        displayToast("ERROR!", false);
+        logger("Login error:", err);
+        displayToast("Login error", false);
+        setLoading(false);
       }
     },
     validationSchema: yup.object({
@@ -38,7 +51,7 @@ export default function SignInForm() {
     }),
   });
 
-  const handleBack = () => route.back();
+  const handleBack = () => router.back();
 
   return (
     <div className="hero is-fullheight">
@@ -115,9 +128,13 @@ export default function SignInForm() {
                     )}
                   </div>
                   <div className="field has-text-centered mt-6">
-                    <button type="submit" className="button is-success">
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="button is-success"
+                    >
                       <FontAwesomeIcon icon={faSignIn} className="pr-2" />{" "}
-                      {content["signin"]}
+                      {loading ? "Loading..." : content["signin"]}
                     </button>
                   </div>
                 </form>
