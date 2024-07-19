@@ -3,10 +3,10 @@ import NavbarTemplate from "../Templates/NavbarTemplate";
 import HeaderComponent from "./components/HeaderComponent";
 
 export default function Homepage() {
-    return (
-        <div className="fadeIn">
-            <NavbarTemplate />
-            <HeaderComponent />
-        </div>
-    );
+  return (
+    <div className="fadeIn">
+      <NavbarTemplate />
+      <HeaderComponent />
+    </div>
+  );
 }

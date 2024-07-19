@@ -4,7 +4,7 @@ import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { ContentContext } from "../../../contexts/LanguageContext";
 
 export default function HeaderComponent() {
-  const [content, setContent] = useContext(ContentContext);
+  const [content] = useContext(ContentContext);
 
   return (
     <div className="container mt-5 p-5">
@@ -14,7 +14,7 @@ export default function HeaderComponent() {
             <div className="is-size-1">{content["header_title"]}</div>
             <div className="is-size-4">{content["header_content"]}</div>
             <div className="has-text-centered">
-              <a className="button is-success mt-5">
+              <a href="https://gun.eco/" className="button is-success mt-5">
                 <strong>
                   <FontAwesomeIcon icon={faInfoCircle} />{" "}
                   {content["header_button_text"]}

@@ -4,65 +4,65 @@ import "gun/sea";
 import { displayToast } from "../../utils";
 
 export const gun = Gun({
-	peers: "http://localhost:8081/",
+  peers: process.env.NEXT_PUBLIC_URL ?? "http://localhost:8081/",
 });
 
 export const user = gun.user().recall({ sessionStorage: true });
 
 const register = async (username, password, consoleLog) => {
-	try {
-		if (username && password) {
-			const result = await user.create(username, password, (ack) => {
-				ack.err ? displayToast(ack.err, false) : displayToast("SUCCESS!");
-			});
-			await user.get("alias").put(username);
-			return result;
-		}
-		displayToast("ERROR!", false);
-		return null;
-	} catch (err) {
-		displayToast("ERROR!", false);
-		return null;
-	}
+  try {
+    if (username && password) {
+      const result = await user.create(username, password, (ack) => {
+        ack.err ? displayToast(ack.err, false) : displayToast("SUCCESS!");
+      });
+      await user.get("alias").put(username);
+      return result;
+    }
+    displayToast("ERROR!", false);
+    return null;
+  } catch (err) {
+    displayToast("ERROR!", false);
+    return null;
+  }
 };
 
 const login = async (username, password, consoleLog) => {
-	try {
-		console.log("username", username);
-		if (username && password) {
-			console.log("user", user);
-			return await user.auth(username, password, (ack) => {
-				if (ack.err) displayToast(ack.err, false);
-				else {
-					displayToast("SUCCESS!");
-					user.recall({ sessionStorage: true });
-				}
-			});
-		}
-		displayToast("ERROR!", false, false);
-		return null;
-	} catch (err) {
-		displayToast("ERROR!", false, false);
-		return null;
-	}
+  try {
+    console.log("username", username);
+    if (username && password) {
+      console.log("user", user);
+      return await user.auth(username, password, (ack) => {
+        if (ack.err) displayToast(ack.err, false);
+        else {
+          displayToast("SUCCESS!");
+          user.recall({ sessionStorage: true });
+        }
+      });
+    }
+    displayToast("ERROR!", false, false);
+    return null;
+  } catch (err) {
+    displayToast("ERROR!", false, false);
+    return null;
+  }
 };
 
 export const logout = () => {
-	user.leave();
-	sessionStorage.clear();
+  user.leave();
+  sessionStorage.clear();
 };
 
 export const removeAccount = (username, consoleLog) => {
-	if (username)
-		user.delete(username, (ack) => {
-			sessionStorage.clear();
-		});
-	else displayToast("ERROR!", false, false);
+  if (username)
+    user.delete(username, (ack) => {
+      sessionStorage.clear();
+    });
+  else displayToast("ERROR!", false, false);
 };
 
 module.exports = {
-	register,
-	login,
-	logout,
-	removeAccount,
+  register,
+  login,
+  logout,
+  removeAccount,
 };
