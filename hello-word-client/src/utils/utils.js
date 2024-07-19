@@ -1,5 +1,8 @@
 import { ethers } from "ethers";
 
+const logger = (err) =>
+  process.env.NEXT_PUBLIC_ENV !== "production" && console.log(err);
+
 const SessionStorage = {
   getItem: (item) => {
     if (typeof window !== "undefined") return sessionStorage.getItem(item);
@@ -30,6 +33,7 @@ const getWalletDetails = async () => {
     }
     return null;
   } catch (err) {
+    logger(err);
     return null;
   }
 };
@@ -37,4 +41,5 @@ const getWalletDetails = async () => {
 module.exports = {
   getWalletDetails,
   SessionStorage,
+  logger,
 };
