@@ -16,8 +16,8 @@ const FilterBar = ({ onFilterChange, activeFilter }) => (
           {filterType === "all"
             ? "All Posts"
             : filterType === "my"
-            ? "My Posts"
-            : "Recent"}
+              ? "My Posts"
+              : "Recent"}
         </button>
       ))}
     </div>

@@ -24,7 +24,7 @@ const PostsPage = () => {
 
         // Fetch comments for this post
         gun
-          .get(`posts_comments`)
+          .get("posts_comments")
           .get(id)
           .map()
           .on((comment, commentId) => {
@@ -52,7 +52,7 @@ const PostsPage = () => {
 
     return () => {
       postsRef.off();
-      gun.get(`posts_comments`).off();
+      gun.get("posts_comments").off();
     };
   }, [gun]);
 
@@ -95,21 +95,21 @@ const PostsPage = () => {
     result.sort((a, b) => b.createdAt - a.createdAt);
 
     switch (filter.type) {
-      case "my":
+    case "my":
+      result = result.filter(
+        (post) => post.author === authentication.username
+      );
+      break;
+    case "search":
+      if (filter.query) {
+        const lowercaseQuery = filter?.query?.toLowerCase();
         result = result.filter(
-          (post) => post.author === authentication.username
-        );
-        break;
-      case "search":
-        if (filter.query) {
-          const lowercaseQuery = filter?.query?.toLowerCase();
-          result = result.filter(
-            (post) =>
-              post?.content?.toLowerCase().includes(lowercaseQuery) ||
+          (post) =>
+            post?.content?.toLowerCase().includes(lowercaseQuery) ||
               post?.author?.toLowerCase().includes(lowercaseQuery)
-          );
-        }
-        break;
+        );
+      }
+      break;
       // "all" and "recent" cases are now the same, as posts are always sorted by recency
     }
 

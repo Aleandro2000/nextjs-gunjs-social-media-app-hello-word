@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
 
 const PostModal = ({ post, isOpen, onClose, onVote, onAddComment }) => {
