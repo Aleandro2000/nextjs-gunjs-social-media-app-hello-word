@@ -16,8 +16,8 @@ import { useAnalytics } from "../../hooks/useAnalytics";
 const StatCard = ({ title, value, change }) => (
   <div className="bg-white rounded-lg shadow-md p-6">
     <h3 className="text-lg font-semibold text-gray-800 mb-2">{title}</h3>
-    <p className="text-3xl font-bold text-gray-900 mb-2">{value || "N/A"}</p>
-    {change !== undefined ? (
+    <p className="text-3xl font-bold text-gray-900 mb-2">{value || 0}</p>
+    {change !== undefined && !isNaN(change) ? (
       <p
         className={`text-sm font-medium ${
           change >= 0 ? "text-green-600" : "text-red-600"
@@ -147,21 +147,21 @@ const AnalyticsPage = () => {
         </h2>
         {analytics.topPerformingPosts &&
         analytics.topPerformingPosts.length > 0 ? (
-          <ul className="space-y-4">
-            {analytics.topPerformingPosts.map((post, index) => (
-              <li key={index} className="flex justify-between items-center">
-                <span className="text-sm font-medium text-gray-600">
-                  {post.title}
-                </span>
-                <span className="text-sm font-semibold text-green-600">
-                  {post.points} points
-                </span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No top performing posts data available</p>
-        )}
+            <ul className="space-y-4">
+              {analytics.topPerformingPosts.map((post, index) => (
+                <li key={index} className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-gray-600">
+                    {post.title}
+                  </span>
+                  <span className="text-sm font-semibold text-green-600">
+                    {post.points} points
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No top performing posts data available</p>
+          )}
       </div>
     </div>
   );

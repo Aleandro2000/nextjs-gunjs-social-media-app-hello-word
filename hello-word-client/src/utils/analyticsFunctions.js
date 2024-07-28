@@ -72,7 +72,7 @@ export const useAnalyticsFunctions = () => {
         [
           ...prevHistory,
           { date: new Date().toISOString().split("T")[0], points },
-        ].slice(-30), // Keep only the last 30 days
+        ].slice(-30),
     });
   };
 

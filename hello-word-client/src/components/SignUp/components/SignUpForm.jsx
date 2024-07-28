@@ -33,10 +33,9 @@ export default function SignUpForm() {
       try {
         setLoading(true);
         const result = await register(values.username, values.password);
-        alert(JSON.stringify(result))
         if (result) {
           recordNewUser();
-          router.push("/");
+          await router.push("/");
         } else {
           logger("Registration failed");
           displayToast("Registration failed", false);
@@ -80,14 +79,14 @@ export default function SignUpForm() {
                   {content["back_text"]}
                 </button>
                 <form onSubmit={formik.handleSubmit}>
-                  <div className="has-text-centered">
+                  <center>
                     <img
                       alt="Hello Word logo"
                       src="/media/logo.png"
                       width="200px"
                       height="200px"
                     />
-                  </div>
+                  </center>
                   <div className="field">
                     <label
                       htmlFor={content["auth_username_text"]}
@@ -109,7 +108,7 @@ export default function SignUpForm() {
                         <FontAwesomeIcon icon={faUser} />
                       </span>
                     </div>
-                    {formik.errors.username && (
+                    {formik.errors.username && formik.touched.username && (
                       <div className="has-text-danger is-size-7">
                         {formik.errors.username}
                       </div>
@@ -136,7 +135,7 @@ export default function SignUpForm() {
                         <FontAwesomeIcon icon={faLock} />
                       </span>
                     </div>
-                    {formik.errors.password && (
+                    {formik.errors.password && formik.touched.password && (
                       <div className="has-text-danger is-size-7">
                         {formik.errors.password}
                       </div>
@@ -163,7 +162,8 @@ export default function SignUpForm() {
                         <FontAwesomeIcon icon={faLock} />
                       </span>
                     </div>
-                    {formik.errors.confirmPassword && (
+                    {formik.errors.confirmPassword &&
+                      formik.touched.confirmPassword && (
                       <div className="has-text-danger is-size-7">
                         {formik.errors.confirmPassword}
                       </div>

@@ -21,11 +21,9 @@ const withAuth = (Component) => {
     };
 
     if (loading) {
-      return <div>Loading...</div>; // Or a loading spinner
+      return <div>Loading...</div>;
     }
 
-    console.log("user", user);
-    // Check if authentication exists
     if (authentication) {
       return (
         <div className="min-h-screen bg-gray-100">

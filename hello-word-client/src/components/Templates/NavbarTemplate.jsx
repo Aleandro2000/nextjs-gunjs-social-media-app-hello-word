@@ -31,7 +31,7 @@ export default function NavbarTemplate() {
             process.env.NEXT_PUBLIC_SECRET_KEY
           )
         );
-        route.push(path);
+        await route.push(path);
         displayToast(content["metamask_message_success"]);
       } else displayToast(content["metamask_message_fail"], false);
     } catch (err) {

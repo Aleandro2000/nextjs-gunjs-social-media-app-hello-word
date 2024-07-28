@@ -33,7 +33,7 @@ export default function SignInForm() {
         const result = await login(values.username, values.password);
         if (result) {
           recordEngagement("login", values.username, 0);
-          router.push("/dashboard/page");
+          await router.push("/dashboard/page");
         } else {
           logger("Login failed");
           displayToast("Login failed", false);
@@ -65,14 +65,14 @@ export default function SignInForm() {
                   {content["back_text"]}
                 </button>
                 <form onSubmit={formik.handleSubmit}>
-                  <div className="has-text-centered">
+                  <center>
                     <img
                       alt="Hello Word logo"
                       src="/media/logo.png"
                       width="200px"
                       height="200px"
                     />
-                  </div>
+                  </center>
                   <div className="field">
                     <label
                       htmlFor={content["auth_username_text"]}
@@ -94,7 +94,7 @@ export default function SignInForm() {
                         <FontAwesomeIcon icon={faUser} />
                       </span>
                     </div>
-                    {formik.errors.username && (
+                    {formik.errors.username && formik.touched.username && (
                       <div className="has-text-danger is-size-7">
                         {formik.errors.username}
                       </div>
@@ -121,7 +121,7 @@ export default function SignInForm() {
                         <FontAwesomeIcon icon={faLock} />
                       </span>
                     </div>
-                    {formik.errors.password && (
+                    {formik.errors.password && formik.touched.password && (
                       <div className="has-text-danger is-size-7">
                         {formik.errors.password}
                       </div>

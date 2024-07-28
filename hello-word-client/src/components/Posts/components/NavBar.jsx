@@ -60,7 +60,7 @@ const Navbar = ({ userPoints, toggleSidebar }) => {
                 />
               </svg>
             </button>
-            <h1 className="text-2xl font-bold text-green-600">EcoConnect</h1>
+            <h1 className="text-2xl font-bold text-green-600">Hello Word!</h1>
           </div>
           <div className="flex items-center space-x-4">
             <span className="text-sm font-medium text-green-600">

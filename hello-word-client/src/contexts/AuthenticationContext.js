@@ -58,7 +58,7 @@ export function AuthProvider({ children }) {
     try {
       if (username && password) {
         const result = await user.create(username, password, (ack) => {
-          ack.err ? displayToast(ack.err, false) : displayToast("SUCCESS!");
+          ack?.err ? displayToast(ack?.err, false) : displayToast("SUCCESS!");
         });
         await user.get("alias").put(username);
         const authData = { user, username };
@@ -80,8 +80,8 @@ export function AuthProvider({ children }) {
     try {
       if (username && password) {
         return await user.auth(username, password, async (ack) => {
-          if (ack.err) {
-            displayToast(ack.err, false);
+          if (ack?.err) {
+            displayToast(ack?.err, false);
           } else {
             displayToast("SUCCESS!");
             await user.recall({ sessionStorage: true });
@@ -109,16 +109,22 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("auth");
   };
 
-  const removeAccount = (username) => {
-    if (!user || !username) {
+  const removeAccount = () => {
+    if (!user) {
       displayToast("ERROR!", false);
       return;
     }
 
-    user.delete(username, (ack) => {
-      sessionStorage.clear();
-      setAuthentication(null);
-      localStorage.removeItem("auth");
+    const { username } = JSON.parse(localStorage.getItem("auth"));
+
+    user.delete(username, sessionStorage.getItem("adr"), (ack) => {
+      if (ack?.err) {
+        displayToast(ack?.err, false);
+      } else {
+        sessionStorage.clear();
+        setAuthentication(null);
+        localStorage.removeItem("auth");
+      }
     });
   };
 
