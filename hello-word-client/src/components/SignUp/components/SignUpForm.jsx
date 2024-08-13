@@ -35,7 +35,7 @@ export default function SignUpForm() {
         const result = await register(values.username, values.password);
         if (result) {
           recordNewUser();
-          await router.push("/");
+          router.push("/");
         } else {
           logger("Registration failed");
           displayToast("Registration failed", false);

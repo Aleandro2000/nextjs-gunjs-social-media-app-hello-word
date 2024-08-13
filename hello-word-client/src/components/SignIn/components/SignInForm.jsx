@@ -33,7 +33,7 @@ export default function SignInForm() {
         const result = await login(values.username, values.password);
         if (result) {
           recordEngagement("login", values.username, 0);
-          await router.push("/dashboard/page");
+          router.push("/dashboard/page");
         } else {
           logger("Login failed");
           displayToast("Login failed", false);
