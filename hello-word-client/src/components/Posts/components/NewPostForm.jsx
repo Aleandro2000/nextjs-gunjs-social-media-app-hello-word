@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const NewPostForm = ({ onAddPost }) => {
   const [postContent, setPostContent] = useState("");
   const [postImage, setPostImage] = useState(null);
   const [scheduleDate, setScheduleDate] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
+
+  useEffect(() => {
+    setScheduleDate(new Date().toISOString().slice(0, 16));
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,7 +21,7 @@ const NewPostForm = ({ onAddPost }) => {
       });
       setPostContent("");
       setPostImage(null);
-      setScheduleDate("");
+      setScheduleDate(new Date().toISOString().slice(0, 16));
       setIsAnonymous(false);
     }
   };

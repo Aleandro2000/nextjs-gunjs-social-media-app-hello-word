@@ -2,6 +2,7 @@ import Gun from "gun/gun";
 import "gun/sea";
 import React, { createContext, useEffect, useState } from "react";
 import { displayToast } from "../utils";
+import { logger } from "ethers";
 
 export const AuthenticationContext = createContext();
 
@@ -100,6 +101,51 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const changePassword = async (username, password, newPassword) => {
+    if (!gun.user()) return null;
+
+    try {
+      if (username && password && newPassword) {
+        gun.user().auth(username, password, async (ack) => {
+          if (ack.err) {
+            displayToast(ack.err, false);
+            return;
+          }
+
+          const user = gun.user();
+          const { pub, priv } = await Gun.SEA.pair();
+
+          user.auth(username, password, async (ack) => {
+            if (ack.err) {
+              displayToast(ack.err, false);
+              return;
+            }
+
+            const encryptedPassword = await Gun.SEA.encrypt(newPassword, priv);
+
+            user.get("sea").put({ pub, priv });
+            user.get("password").put(encryptedPassword);
+
+            displayToast("Password changed successfully!", true);
+            await user.recall({ sessionStorage: true });
+
+            const alias = await user.get("alias").then();
+            const authData = { user, username: alias };
+            setAuthentication(authData);
+            localStorage.setItem("auth", JSON.stringify(authData));
+          });
+        });
+      } else {
+        displayToast("Invalid input!", false);
+        return null;
+      }
+    } catch (err) {
+      displayToast("ERROR!", false);
+      logger(err);
+      return null;
+    }
+  };
+
   const logout = () => {
     if (!user) return;
 
@@ -137,6 +183,7 @@ export function AuthProvider({ children }) {
         login,
         logout,
         removeAccount,
+        changePassword,
         gun,
         user,
       }}
