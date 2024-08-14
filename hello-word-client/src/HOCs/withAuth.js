@@ -16,7 +16,7 @@ const withAuth = (Component) => {
       }
     }, [authentication, loading, router]);
 
-    const toggleSidebar = () => {
+    const toggleSidebar = () => { 
       setIsSidebarOpen(!isSidebarOpen);
     };
 
