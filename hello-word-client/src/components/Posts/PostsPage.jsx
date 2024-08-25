@@ -4,12 +4,17 @@ import { useAnalyticsFunctions } from "../../utils/analyticsFunctions";
 import FilterBar from "./components/FilterBar";
 import NewPostForm from "./components/NewPostForm";
 import Post from "./components/Post";
+import { useProfanityChecker } from "glin-profanity";
+import { logger, displayToast } from "../../utils";
 
 const PostsPage = () => {
   const [posts, setPosts] = useState({});
   const [filter, setFilter] = useState({ type: "all", query: "" });
   const { authentication, gun } = useContext(AuthenticationContext);
   const { recordNewPost } = useAnalyticsFunctions();
+  const { checkTextAsync } = useProfanityChecker({
+    allLanguages: true
+  });
 
   useEffect(() => {
     if (!gun) return;
@@ -22,7 +27,6 @@ const PostsPage = () => {
           [id]: { ...post, id, comments: {} },
         }));
 
-        // Fetch comments for this post
         gun
           .get("posts_comments")
           .get(id)
@@ -56,28 +60,36 @@ const PostsPage = () => {
     };
   }, [gun]);
 
-  const addPost = (newPost) => {
-    if (!authentication || !authentication.username) {
-      console.error("Username not available");
-      return;
+  const addPost = async (newPost) => {
+    try {
+      if ((await checkTextAsync(newPost.content)).containsProfanity) {
+        displayToast("Ooops! The post may violate general ethics!", false);
+        return;
+      }
+      if (!authentication || !authentication.username) {
+        logger("Username not available");
+        return;
+      }
+      const id = Gun.text.random();
+      const postData = {
+        content: newPost.content,
+        createdAt: Date.now(),
+        author: newPost.isAnonymous ? "Anonymous" : authentication.username,
+        points: 0,
+        image: newPost.image ? URL.createObjectURL(newPost.image) : null,
+        scheduleDate: newPost.scheduleDate,
+      };
+      gun.get("posts").get(id).put(postData);
+      recordNewPost(authentication.username, id, newPost.content);
+  
+      setPosts((prevPosts) => ({
+        [id]: { ...postData, id, comments: {} },
+        ...prevPosts,
+      }));
+    } catch (err) {
+      displayToast("ERROR! Something is wrong!", false);
+      logger(err);
     }
-    const id = Gun.text.random();
-    const postData = {
-      content: newPost.content,
-      createdAt: Date.now(),
-      author: newPost.isAnonymous ? "Anonymous" : authentication.username,
-      points: 0,
-      image: newPost.image ? URL.createObjectURL(newPost.image) : null,
-      scheduleDate: newPost.scheduleDate,
-    };
-    gun.get("posts").get(id).put(postData);
-    recordNewPost(authentication.username, id, newPost.content);
-
-    // Add the new post to the beginning of the list
-    setPosts((prevPosts) => ({
-      [id]: { ...postData, id, comments: {} },
-      ...prevPosts,
-    }));
   };
 
   const handleVote = (postId, voteType) => {
@@ -91,7 +103,6 @@ const PostsPage = () => {
   const filteredPosts = useMemo(() => {
     let result = Object.values(posts);
 
-    // Always sort posts by createdAt, most recent first
     result.sort((a, b) => b.createdAt - a.createdAt);
 
     switch (filter.type) {
@@ -110,7 +121,8 @@ const PostsPage = () => {
         );
       }
       break;
-      // "all" and "recent" cases are now the same, as posts are always sorted by recency
+    default:
+      break;
     }
 
     return result;
