@@ -43,7 +43,7 @@ const NewPostForm = ({ onAddPost }) => {
           <input
             type="file"
             onChange={(e) => setPostImage(e.target.files[0])}
-            className="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+            className="text-sm cursor-pointer text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
           />
           <input
             type="datetime-local"
