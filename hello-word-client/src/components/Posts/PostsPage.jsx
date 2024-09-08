@@ -4,17 +4,15 @@ import { useAnalyticsFunctions } from "../../utils/analyticsFunctions";
 import FilterBar from "./components/FilterBar";
 import NewPostForm from "./components/NewPostForm";
 import Post from "./components/Post";
-import { useProfanityChecker } from "glin-profanity";
+import { profanity } from "@2toad/profanity";
 import { logger, displayToast } from "../../utils";
+import { isEnglish } from "../../utils/langDetect";
 
 const PostsPage = () => {
   const [posts, setPosts] = useState({});
   const [filter, setFilter] = useState({ type: "all", query: "" });
   const { authentication, gun } = useContext(AuthenticationContext);
   const { recordNewPost } = useAnalyticsFunctions();
-  const { checkTextAsync } = useProfanityChecker({
-    allLanguages: true
-  });
 
   useEffect(() => {
     if (!gun) return;
@@ -62,7 +60,14 @@ const PostsPage = () => {
 
   const addPost = async (newPost) => {
     try {
-      if ((await checkTextAsync(newPost.content)).containsProfanity) {
+      if (!isEnglish(newPost.content)) {
+        displayToast(
+          "We may support only english langauge at this moment!",
+          false
+        );
+        return;
+      }
+      if (profanity.exists(newPost.content)) {
         displayToast("Ooops! The post may violate general ethics!", false);
         return;
       }
@@ -81,7 +86,7 @@ const PostsPage = () => {
       };
       gun.get("posts").get(id).put(postData);
       recordNewPost(authentication.username, id, newPost.content);
-  
+
       setPosts((prevPosts) => ({
         [id]: { ...postData, id, comments: {} },
         ...prevPosts,
