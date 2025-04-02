@@ -1,0 +1,61 @@
+.hero.is-success {
+  background-color: #10B981 !important;
+}
+.button.is-success {
+  background-color: #10B981 !important;
+}
+.button.is-success:hover {
+  background-color: #059669 !important;
+}
+.has-background-dark-custom {
+  background-color: #1F2937 !important;
+}
+.has-background-black-custom {
+  background-color: #111827 !important;
+}
+.has-text-success-custom {
+  color: #10B981 !important;
+}
+.table-container {
+  background-color: #111827;
+  border-radius: 6px;
+  padding: 1px;
+}
+.table {
+  background-color: #111827;
+  color: white;
+}
+.table thead th {
+  color: #D1D5DB !important;
+}
+.table tbody tr:hover {
+  background-color: #1F2937 !important;
+}
+.table.is-striped tbody tr:not(.is-selected):nth-child(even) {
+  background-color: #151E2F !important;
+}
+.box {
+  background-color: #1F2937;
+  color: white;
+}
+.input, .select select {
+  background-color: #111827;
+  color: white;
+  border-color: #374151;
+}
+.input:focus, .select select:focus {
+  border-color: #10B981;
+}
+.label {
+  color: #D1D5DB;
+}
+.tag.is-warning {
+  background-color: #FBBF24;
+  color: #7C2D12;
+}
+.tag.is-success {
+  background-color: #10B981;
+}
+.tag.is-danger {
+  background-color: #EF4444;
+}
