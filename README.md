@@ -14,8 +14,6 @@ Welcome to Hello Word, a decentralized social media app built using [GUN.js](htt
 ## Contributors
 
 - [aleandro2000](https://github.com/aleandro2000)
-- [nico7777777](https://github.com/nico7777777)
-- [TirlaP](https://github.com/TirlaP)
 
 ## Contributing
 
